@@ -31,6 +31,7 @@ class MapCoordinator: Coordinator {
         viewModel.coordinator = self
         
         tabBarController.setViewControllers([view], animated: false)
+        rootNavigationController.navigationBar.isHidden = true
         rootNavigationController.setViewControllers([tabBarController], animated: true)
     }
     

@@ -54,39 +54,43 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4gI-PG-NY8">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C66-ns-Fjm">
-                                <rect key="frame" x="324" y="44" width="70" height="40"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kUO-Kt-ygW">
+                                <rect key="frame" x="359" y="44" width="40" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="70" id="Bpw-9G-Lai"/>
-                                    <constraint firstAttribute="height" constant="40" id="a5E-2J-YYc"/>
+                                    <constraint firstAttribute="height" constant="40" id="Ud6-uU-RIr"/>
+                                    <constraint firstAttribute="width" constant="40" id="v0M-WL-qPC"/>
                                 </constraints>
-                                <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal">
-                                    <imageReference key="image" image="location.circle" catalog="system" symbolScale="large"/>
-                                </state>
+                                <state key="normal" image="location.circle" catalog="system"/>
+                                <connections>
+                                    <action selector="changeLocationStyle:" destination="c8i-IG-g3K" eventType="touchUpInside" id="8dQ-9E-fAo"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PB4-Za-MKf">
-                                <rect key="frame" x="239" y="44" width="70" height="40"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P37-9H-pSZ">
+                                <rect key="frame" x="299" y="44" width="40" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="4EV-of-Wti"/>
-                                    <constraint firstAttribute="width" constant="70" id="VIP-pG-tck"/>
+                                    <constraint firstAttribute="height" constant="40" id="4cN-eS-3P1"/>
+                                    <constraint firstAttribute="width" constant="40" id="Bex-yH-kqq"/>
                                 </constraints>
-                                <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="camera.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="getPhoto:" destination="c8i-IG-g3K" eventType="touchUpInside" id="npb-eA-bfQ"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Hef-DW-Eyo"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="C66-ns-Fjm" firstAttribute="top" secondItem="Tzb-fr-ep9" secondAttribute="top" constant="44" id="H5q-Th-b5J"/>
+                            <constraint firstAttribute="trailing" secondItem="kUO-Kt-ygW" secondAttribute="trailing" constant="15" id="5Tb-FP-43Y"/>
+                            <constraint firstItem="P37-9H-pSZ" firstAttribute="top" secondItem="Tzb-fr-ep9" secondAttribute="top" constant="44" id="5pe-hx-qSO"/>
+                            <constraint firstItem="kUO-Kt-ygW" firstAttribute="top" secondItem="Tzb-fr-ep9" secondAttribute="top" constant="44" id="BAq-vI-4SD"/>
+                            <constraint firstItem="kUO-Kt-ygW" firstAttribute="leading" secondItem="P37-9H-pSZ" secondAttribute="trailing" constant="20" id="CHv-BC-P2f"/>
                             <constraint firstAttribute="top" secondItem="4gI-PG-NY8" secondAttribute="top" id="Pui-LW-PKZ"/>
-                            <constraint firstItem="4gI-PG-NY8" firstAttribute="leading" secondItem="Hef-DW-Eyo" secondAttribute="leading" id="bmQ-pF-HVP"/>
-                            <constraint firstItem="PB4-Za-MKf" firstAttribute="top" secondItem="Tzb-fr-ep9" secondAttribute="top" constant="44" id="dAU-To-GED"/>
-                            <constraint firstItem="C66-ns-Fjm" firstAttribute="leading" secondItem="PB4-Za-MKf" secondAttribute="trailing" constant="15" id="ewO-4y-n4n"/>
-                            <constraint firstItem="Hef-DW-Eyo" firstAttribute="trailing" secondItem="C66-ns-Fjm" secondAttribute="trailing" constant="20" id="uoR-nM-MeB"/>
-                            <constraint firstItem="Hef-DW-Eyo" firstAttribute="trailing" secondItem="4gI-PG-NY8" secondAttribute="trailing" id="x8M-ZO-26f"/>
+                            <constraint firstItem="4gI-PG-NY8" firstAttribute="leading" secondItem="Tzb-fr-ep9" secondAttribute="leading" id="bmQ-pF-HVP"/>
+                            <constraint firstAttribute="trailing" secondItem="4gI-PG-NY8" secondAttribute="trailing" id="x8M-ZO-26f"/>
                             <constraint firstItem="Hef-DW-Eyo" firstAttribute="bottom" secondItem="4gI-PG-NY8" secondAttribute="bottom" id="y5E-Df-T9s"/>
                         </constraints>
                     </view>
@@ -180,7 +184,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="swI-AK-FvJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2954" y="96"/>
+            <point key="canvasLocation" x="-3068" y="96"/>
         </scene>
         <!--Register View Controller-->
         <scene sceneID="YK6-70-vxh">
@@ -247,7 +251,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zQ9-EJ-aLy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2155" y="96"/>
+            <point key="canvasLocation" x="-2107" y="96"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="5OD-YJ-XVf">

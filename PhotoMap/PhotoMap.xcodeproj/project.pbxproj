@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA34EF53275A127500EC561C /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA34EF52275A127500EC561C /* UIViewExtension.swift */; };
+		FA34EF56275A13C200EC561C /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA34EF55275A13C200EC561C /* PopupView.swift */; };
+		FA34EF58275A144100EC561C /* PopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA34EF57275A144100EC561C /* PopupView.xib */; };
+		FA34EF5B275A239C00EC561C /* PhotoCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA34EF5A275A239C00EC561C /* PhotoCardModel.swift */; };
 		FAA08BFF2758E17B00B7C960 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA08BFE2758E17B00B7C960 /* AppDelegate.swift */; };
 		FAA08C012758E17B00B7C960 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA08C002758E17B00B7C960 /* SceneDelegate.swift */; };
 		FAA08C062758E17B00B7C960 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAA08C042758E17B00B7C960 /* Main.storyboard */; };
@@ -60,6 +64,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FA34EF52275A127500EC561C /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		FA34EF55275A13C200EC561C /* PopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
+		FA34EF57275A144100EC561C /* PopupView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PopupView.xib; sourceTree = "<group>"; };
+		FA34EF5A275A239C00EC561C /* PhotoCardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCardModel.swift; sourceTree = "<group>"; };
 		FAA08BFB2758E17B00B7C960 /* PhotoMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAA08BFE2758E17B00B7C960 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FAA08C002758E17B00B7C960 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -118,6 +126,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FA34EF51275A125900EC561C /* Extansions */ = {
+			isa = PBXGroup;
+			children = (
+				FA34EF52275A127500EC561C /* UIViewExtension.swift */,
+			);
+			path = Extansions;
+			sourceTree = "<group>";
+		};
+		FA34EF54275A12E200EC561C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FA34EF55275A13C200EC561C /* PopupView.swift */,
+				FA34EF57275A144100EC561C /* PopupView.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FA34EF59275A238800EC561C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FA34EF5A275A239C00EC561C /* PhotoCardModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		FAA08BF22758E17B00B7C960 = {
 			isa = PBXGroup;
 			children = (
@@ -235,6 +268,8 @@
 		FAA08C442758ED4900B7C960 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				FA34EF54275A12E200EC561C /* Views */,
+				FA34EF51275A125900EC561C /* Extansions */,
 				FAA08C452758ED5E00B7C960 /* Coordinator.swift */,
 				FAA08C562758FEA400B7C960 /* NetworkError.swift */,
 			);
@@ -287,6 +322,7 @@
 		FAA08C62275910BE00B7C960 /* MapScreen */ = {
 			isa = PBXGroup;
 			children = (
+				FA34EF59275A238800EC561C /* Models */,
 				FAA08C65275910D300B7C960 /* MapCoordinator */,
 				FAA08C64275910CD00B7C960 /* MapViewModel */,
 				FAA08C63275910C700B7C960 /* MapView */,
@@ -434,6 +470,7 @@
 			files = (
 				FAA08C0B2758E17C00B7C960 /* LaunchScreen.storyboard in Resources */,
 				FAA08C2F2758E2BB00B7C960 /* GoogleService-Info.plist in Resources */,
+				FA34EF58275A144100EC561C /* PopupView.xib in Resources */,
 				FAA08C082758E17C00B7C960 /* Assets.xcassets in Resources */,
 				FAA08C062758E17B00B7C960 /* Main.storyboard in Resources */,
 			);
@@ -468,9 +505,12 @@
 				FAA08C6B2759117900B7C960 /* MapCoordinator.swift in Sources */,
 				FAA08C012758E17B00B7C960 /* SceneDelegate.swift in Sources */,
 				FAA08C5F2759025700B7C960 /* RegisterViewModel.swift in Sources */,
+				FA34EF53275A127500EC561C /* UIViewExtension.swift in Sources */,
 				FAA08C61275902A400B7C960 /* RegisterCoordinator.swift in Sources */,
+				FA34EF5B275A239C00EC561C /* PhotoCardModel.swift in Sources */,
 				FAA08C672759110200B7C960 /* MapViewController.swift in Sources */,
 				FAA08C502758F5D500B7C960 /* AuthViewModel.swift in Sources */,
+				FA34EF56275A13C200EC561C /* PopupView.swift in Sources */,
 				FAA08C4E2758F52F00B7C960 /* AuthViewController.swift in Sources */,
 				FAA08C4A2758EDD300B7C960 /* AuthCoordinator.swift in Sources */,
 				FAA08C572758FEA400B7C960 /* NetworkError.swift in Sources */,
