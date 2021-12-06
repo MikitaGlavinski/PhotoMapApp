@@ -10,6 +10,7 @@ import UIKit
 protocol PopupViewDelegate: AnyObject {
     func changeCategory(completion: @escaping (Category?) -> ())
     func savePhoto(model: PhotoCardModel)
+    func cancel()
 }
 
 class PopupView: UIView {
@@ -102,6 +103,7 @@ class PopupView: UIView {
             self.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
         } completion: { _ in
             self.removeFromSuperview()
+            self.delegate?.cancel()
         }
     }
     

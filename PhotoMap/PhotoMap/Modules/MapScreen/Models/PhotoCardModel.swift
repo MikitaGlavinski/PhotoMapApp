@@ -21,15 +21,17 @@ struct PhotoCardModel {
     var stringDate: String
     var category: Category
     var text: String
-    var lat: Double = 0.0
-    var lon: Double = 0.0
+    var lat: Double
+    var lon: Double
     
     init(
         image: UIImage,
         date: Double,
         stringDate: String,
         category: Category,
-        text: String
+        text: String,
+        lat: Double,
+        lon: Double
     ) {
         self.id = UUID().uuidString
         self.image = image
@@ -40,6 +42,8 @@ struct PhotoCardModel {
         self.stringDate = formatter.string(from: convertDate)
         self.category = category
         self.text = text
+        self.lat = lat
+        self.lon = lon
     }
 }
 

@@ -10,6 +10,7 @@ import Firebase
 
 protocol FirebaseServiceProtocol {
     func setDataAt(path: String, data: [String: Any], completion: @escaping (Result<String, Error>) -> ())
+    func getUserPhotos(completion: @escaping (Result<[PhotoRestModel], Error>) -> ())
     func uploadImage(data: Data, completion: @escaping (Result<String, Error>) -> ())
 }
 
@@ -24,6 +25,24 @@ class FirebaseService: FirebaseServiceProtocol {
     private let db = Firestore.firestore()
     private let storage = Storage.storage().reference()
     
+    private func getListData<T: Decodable>(path: String, type: T.Type, completion: @escaping (Result<[T], Error>) -> ()) {
+        db.collection(path).getDocuments { snapshot, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            var items = [T]()
+            for document in snapshot?.documents ?? [] {
+                guard let item = try? DictionaryDecoder().decode(data: document.data(), type: type) else {
+                    completion(.failure(NetworkError.unrecognized))
+                    return
+                }
+                items.append(item)
+            }
+            completion(.success(items))
+        }
+    }
+    
     func setDataAt(path: String, data: [String: Any], completion: @escaping (Result<String, Error>) -> ()) {
         db.document(path).setData(data) { error in
             self.queue.async {
@@ -34,6 +53,26 @@ class FirebaseService: FirebaseServiceProtocol {
                 completion(.success("success"))
             }
         }
+    }
+    
+    func getUserPhotos(completion: @escaping (Result<[PhotoRestModel], Error>) -> ()) {
+        guard let token = SecureStorageService.shared.obtainToken() else { return }
+        getListData(path: token, type: PhotoRestModel.self, completion: completion)
+//        db.collection(token).getDocuments { snapshot, error in
+//            if let error = error {
+//                completion(.failure(error))
+//                return
+//            }
+//            var photos = [PhotoRestModel]()
+//            for document in snapshot?.documents ?? [] {
+//                guard let photo = try? DictionaryDecoder().decode(data: document.data(), type: PhotoRestModel.self) else {
+//                    completion(.failure(NetworkError.unrecognized))
+//                    return
+//                }
+//                photos.append(photo)
+//            }
+//            completion(.success(photos))
+//        }
     }
     
     func uploadImage(data: Data, completion: @escaping (Result<String, Error>) -> ()) {

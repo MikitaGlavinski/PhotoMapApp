@@ -6,23 +6,27 @@
 //
 
 import UIKit
+import CoreLocation
 
 protocol MapViewModelProtocol: AnyObject {
-    func takePhoto()
-    func choosePhoto()
+    func takePhoto(touchCoordinate: CLLocationCoordinate2D)
+    func choosePhoto(touchCoordinate: CLLocationCoordinate2D)
     func uploadImageData(from model: PhotoCardModel)
+    func resetTouchCoordinate()
 }
 
 class MapViewModel: NSObject {
     weak var view: MapViewInput!
     var coordinator: MapCoordinatorDelegate!
+    private var touchCoordinate: CLLocationCoordinate2D?
     
     private var queue = DispatchQueue(label: "MapViewModelQueue", qos: .background)
 }
 
 extension MapViewModel: MapViewModelProtocol {
     
-    func takePhoto() {
+    func takePhoto(touchCoordinate: CLLocationCoordinate2D) {
+        self.touchCoordinate = touchCoordinate
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             let picker = UIImagePickerController()
             picker.delegate = self
@@ -33,7 +37,8 @@ extension MapViewModel: MapViewModelProtocol {
         }
     }
     
-    func choosePhoto() {
+    func choosePhoto(touchCoordinate: CLLocationCoordinate2D) {
+        self.touchCoordinate = touchCoordinate
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
             let picker = UIImagePickerController()
             picker.delegate = self
@@ -81,6 +86,10 @@ extension MapViewModel: MapViewModelProtocol {
             }
         }
     }
+    
+    func resetTouchCoordinate() {
+        touchCoordinate = nil
+    }
 }
 
 extension MapViewModel: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
@@ -89,7 +98,16 @@ extension MapViewModel: UINavigationControllerDelegate, UIImagePickerControllerD
         guard let image = info[.editedImage] as? UIImage else { return }
         picker.dismiss(animated: false, completion: nil)
         
-        let cardModel = PhotoCardModel(image: image, date: Date().timeIntervalSince1970, stringDate: "", category: .friends, text: "")
+        guard let touchCoordinate = touchCoordinate else { return }
+        let cardModel = PhotoCardModel(
+            image: image,
+            date: Date().timeIntervalSince1970,
+            stringDate: "",
+            category: .friends,
+            text: "",
+            lat: touchCoordinate.latitude,
+            lon: touchCoordinate.longitude
+        )
         view.showPopupView(with: cardModel)
     }
 }

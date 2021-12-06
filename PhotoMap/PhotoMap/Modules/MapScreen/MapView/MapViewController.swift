@@ -40,21 +40,32 @@ class MapViewController: UIViewController {
         locationManager = CLLocationManager()
         locationManager.requestWhenInUseAuthorization()
         mapView.delegate = self
+        addGestures()
     }
     
-    @IBAction func getPhoto(_ sender: Any) {
+    private func addGestures() {
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+        longPress.minimumPressDuration = 1.5
+        mapView.addGestureRecognizer(longPress)
+    }
+    
+    private func showActionSheet(touchCoordinate: CLLocationCoordinate2D) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let takePhotoAction = UIAlertAction(title: "Take a Picture", style: .default) { _ in
-            self.viewModel.takePhoto()
+            self.viewModel.takePhoto(touchCoordinate: touchCoordinate)
         }
         let choosePhotoAction = UIAlertAction(title: "Choose From Library", style: .default) { _ in
-            self.viewModel.choosePhoto()
+            self.viewModel.choosePhoto(touchCoordinate: touchCoordinate)
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(takePhotoAction)
         alert.addAction(choosePhotoAction)
         alert.addAction(cancelAction)
         present(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func getPhoto(_ sender: Any) {
+        showActionSheet(touchCoordinate: mapView.userLocation.coordinate)
     }
     
     @IBAction func changeLocationStyle(_ sender: Any) {
@@ -70,6 +81,11 @@ class MapViewController: UIViewController {
     
     @objc private func keyboardWillHide() {
         view.frame.origin.y = 0
+    }
+    
+    @objc private func handleLongPress(_ touch: UITouch) {
+        let coordinate = mapView.convert(touch.location(in: mapView), toCoordinateFrom: mapView)
+        showActionSheet(touchCoordinate: coordinate)
     }
 }
 
@@ -123,10 +139,11 @@ extension MapViewController: PopupViewDelegate {
     }
     
     func savePhoto(model: PhotoCardModel) {
-        var cardModel = model
-        cardModel.lon = mapView.userLocation.coordinate.longitude
-        cardModel.lat = mapView.userLocation.coordinate.latitude
-        viewModel.uploadImageData(from: cardModel)
+        viewModel.uploadImageData(from: model)
+    }
+    
+    func cancel() {
+        viewModel.resetTouchCoordinate()
     }
 }
 
