@@ -15,11 +15,14 @@ enum Category: String {
 }
 
 struct PhotoCardModel {
+    var id: String
     var image: UIImage
     var date: Double
     var stringDate: String
     var category: Category
     var text: String
+    var lat: Double = 0.0
+    var lon: Double = 0.0
     
     init(
         image: UIImage,
@@ -28,6 +31,7 @@ struct PhotoCardModel {
         category: Category,
         text: String
     ) {
+        self.id = UUID().uuidString
         self.image = image
         self.date = date
         let convertDate = Date(timeIntervalSince1970: date)
@@ -36,5 +40,27 @@ struct PhotoCardModel {
         self.stringDate = formatter.string(from: convertDate)
         self.category = category
         self.text = text
+    }
+}
+
+struct PhotoRestModel: Codable {
+    var id: String
+    var imageUrl: String
+    var date: Double
+    var stringDate: String
+    var category: String
+    var text: String
+    var lat: Double
+    var lon: Double
+    
+    init(cardModel: PhotoCardModel, imageUrl: String) {
+        self.id = cardModel.id
+        self.imageUrl = imageUrl
+        self.date = cardModel.date
+        self.stringDate = cardModel.stringDate
+        self.category = cardModel.category.rawValue
+        self.text = cardModel.text
+        self.lat = cardModel.lat
+        self.lon = cardModel.lon
     }
 }

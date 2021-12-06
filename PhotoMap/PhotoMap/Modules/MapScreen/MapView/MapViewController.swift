@@ -12,6 +12,8 @@ import MapKit
 protocol MapViewInput: AnyObject {
     func presentPicker(picker: UIImagePickerController)
     func showPopupView(with model: PhotoCardModel)
+    func showError(error: Error)
+    func addPin(model: PhotoCardModel)
 }
 
 class MapViewController: UIViewController {
@@ -19,6 +21,8 @@ class MapViewController: UIViewController {
     private var locationManager: CLLocationManager!
     var viewModel: MapViewModelProtocol!
     @IBOutlet weak var mapView: MKMapView!
+    
+    private var photoModels = [PhotoCardModel]()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -35,6 +39,7 @@ class MapViewController: UIViewController {
         super.viewDidLoad()
         locationManager = CLLocationManager()
         locationManager.requestWhenInUseAuthorization()
+        mapView.delegate = self
     }
     
     @IBAction func getPhoto(_ sender: Any) {
@@ -75,9 +80,24 @@ extension MapViewController: MapViewInput {
     }
     
     func showPopupView(with model: PhotoCardModel) {
-        let popup = PopupView(frame: CGRect(x: 20.0, y: 150, width: UIScreen.main.bounds.width - 40.0, height: UIScreen.main.bounds.height - 300.0), model: model)
+        let popup = PopupView(frame: CGRect(x: 20.0, y: 150.0, width: UIScreen.main.bounds.width - 40.0, height: UIScreen.main.bounds.height - 300.0), model: model)
         popup.delegate = self
         view.addSubview(popup)
+    }
+    
+    func showError(error: Error) {
+        let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+        let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func addPin(model: PhotoCardModel) {
+        photoModels.append(model)
+        let pin = MKPointAnnotation()
+        pin.coordinate = CLLocationCoordinate2D(latitude: model.lat, longitude: model.lon)
+        pin.title = model.id
+        mapView.addAnnotation(pin)
     }
 }
 
@@ -103,6 +123,36 @@ extension MapViewController: PopupViewDelegate {
     }
     
     func savePhoto(model: PhotoCardModel) {
-        
+        var cardModel = model
+        cardModel.lon = mapView.userLocation.coordinate.longitude
+        cardModel.lat = mapView.userLocation.coordinate.latitude
+        viewModel.uploadImageData(from: cardModel)
+    }
+}
+
+extension MapViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard let index = photoModels.firstIndex(where: {$0.id == annotation.title}) else {
+            return nil
+        }
+        let imageView = UIImageView(image: UIImage(named: "annotation"))
+        let view = MKAnnotationView()
+        view.frame = CGRect(x: 0, y: 0, width: 40, height: 50)
+        view.centerOffset = CGPoint(x: 0, y: -25)
+        imageView.frame = view.bounds
+        view.addSubview(imageView)
+        switch photoModels[index].category {
+        case .friends:
+            imageView.tintColor = .systemOrange
+        case .nature:
+            imageView.tintColor = .systemGreen
+        case .standart:
+            imageView.tintColor = .systemBlue
+        }
+        return view
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        print("pin")
     }
 }

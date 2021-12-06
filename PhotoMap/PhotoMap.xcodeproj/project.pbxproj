@@ -44,6 +44,8 @@
 		FAA08C672759110200B7C960 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA08C662759110200B7C960 /* MapViewController.swift */; };
 		FAA08C692759112C00B7C960 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA08C682759112C00B7C960 /* MapViewModel.swift */; };
 		FAA08C6B2759117900B7C960 /* MapCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA08C6A2759117900B7C960 /* MapCoordinator.swift */; };
+		FAC2F300275DEE7400E36931 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC2F2FF275DEE7400E36931 /* FirebaseService.swift */; };
+		FAC2F302275E320B00E36931 /* DictionaryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC2F301275E320B00E36931 /* DictionaryHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +96,8 @@
 		FAA08C662759110200B7C960 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		FAA08C682759112C00B7C960 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		FAA08C6A2759117900B7C960 /* MapCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCoordinator.swift; sourceTree = "<group>"; };
+		FAC2F2FF275DEE7400E36931 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
+		FAC2F301275E320B00E36931 /* DictionaryHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -281,6 +285,8 @@
 			children = (
 				FAA08C522758F6CF00B7C960 /* SecureStorageService.swift */,
 				FAA08C542758FDB800B7C960 /* AuthorizationService.swift */,
+				FAC2F2FF275DEE7400E36931 /* FirebaseService.swift */,
+				FAC2F301275E320B00E36931 /* DictionaryHelper.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -499,6 +505,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAC2F300275DEE7400E36931 /* FirebaseService.swift in Sources */,
 				FAA08C532758F6CF00B7C960 /* SecureStorageService.swift in Sources */,
 				FAA08C5D2759022A00B7C960 /* RegisterViewController.swift in Sources */,
 				FAA08BFF2758E17B00B7C960 /* AppDelegate.swift in Sources */,
@@ -509,6 +516,7 @@
 				FAA08C61275902A400B7C960 /* RegisterCoordinator.swift in Sources */,
 				FA34EF5B275A239C00EC561C /* PhotoCardModel.swift in Sources */,
 				FAA08C672759110200B7C960 /* MapViewController.swift in Sources */,
+				FAC2F302275E320B00E36931 /* DictionaryHelper.swift in Sources */,
 				FAA08C502758F5D500B7C960 /* AuthViewModel.swift in Sources */,
 				FA34EF56275A13C200EC561C /* PopupView.swift in Sources */,
 				FAA08C4E2758F52F00B7C960 /* AuthViewController.swift in Sources */,
