@@ -16,7 +16,8 @@ enum Category: String {
 
 struct PhotoCardModel {
     var id: String
-    var image: UIImage
+    var image: UIImage?
+    var imageUrl: String?
     var date: Double
     var stringDate: String
     var category: Category
@@ -44,6 +45,26 @@ struct PhotoCardModel {
         self.text = text
         self.lat = lat
         self.lon = lon
+    }
+    
+    init(restModel: PhotoRestModel) {
+        self.id = restModel.id
+        self.imageUrl = restModel.imageUrl
+        self.date = restModel.date
+        self.stringDate = restModel.stringDate
+        self.text = restModel.text
+        self.lat = restModel.lat
+        self.lon = restModel.lon
+        switch restModel.category {
+        case "FRIENDS":
+            self.category = .friends
+        case "NATURE":
+            self.category = .nature
+        case "DEFAULT":
+            self.category = .standart
+        default:
+            self.category = .friends
+        }
     }
 }
 

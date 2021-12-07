@@ -10,7 +10,7 @@ import UIKit
 protocol PopupViewDelegate: AnyObject {
     func changeCategory(completion: @escaping (Category?) -> ())
     func savePhoto(model: PhotoCardModel)
-    func cancel()
+    func showPhoto(with model: PhotoCardModel)
 }
 
 class PopupView: UIView {
@@ -24,8 +24,6 @@ class PopupView: UIView {
     
     weak var delegate: PopupViewDelegate?
     var cardModel: PhotoCardModel?
-    
-    var mainView: UIView?
     
     init(frame: CGRect, model: PhotoCardModel) {
         super.init(frame: frame)
@@ -42,7 +40,6 @@ class PopupView: UIView {
         guard let view = loadFromNib(nibName: "PopupView") else { return }
         view.frame = bounds
         addSubview(view)
-        mainView = view
         view.layer.cornerRadius = 5.0
         view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowRadius = 3.0
@@ -70,8 +67,16 @@ class PopupView: UIView {
         textView.text = model.text
         textView.delegate = self
         
+        addGestures()
+    }
+    
+    private func addGestures() {
         let mainTap = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         addGestureRecognizer(mainTap)
+        
+        let imageTap = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
+        mainImageView.isUserInteractionEnabled = true
+        mainImageView.addGestureRecognizer(imageTap)
     }
     
     private func handleCategory(category: Category) {
@@ -103,7 +108,6 @@ class PopupView: UIView {
             self.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
         } completion: { _ in
             self.removeFromSuperview()
-            self.delegate?.cancel()
         }
     }
     
@@ -127,6 +131,11 @@ class PopupView: UIView {
     
     @objc private func hideKeyboard() {
         endEditing(true)
+    }
+    
+    @objc private func imageTapped() {
+        guard let cardModel = cardModel else { return }
+        delegate?.showPhoto(with: cardModel)
     }
 }
 

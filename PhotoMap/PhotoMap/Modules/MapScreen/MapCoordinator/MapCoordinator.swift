@@ -8,7 +8,7 @@
 import UIKit
 
 protocol MapCoordinatorDelegate: AnyObject {
-    
+    func showPhoto(with model: PhotoCardModel)
 }
 
 class MapCoordinator: Coordinator {
@@ -49,4 +49,13 @@ class MapCoordinator: Coordinator {
 
 extension MapCoordinator: MapCoordinatorDelegate {
     
+    func showPhoto(with model: PhotoCardModel) {
+        guard let rootNavigationController = rootNavigationController else { return }
+        let photoCoordinator = PhotoScreenCoordinator(rootNavigationController: rootNavigationController, photoModel: model)
+        photoCoordinator.onEnd = { [unowned photoCoordinator] in
+            self.remove(childCoordinator: photoCoordinator)
+        }
+        photoCoordinator.start()
+        add(childCoordinator: photoCoordinator)
+    }
 }
