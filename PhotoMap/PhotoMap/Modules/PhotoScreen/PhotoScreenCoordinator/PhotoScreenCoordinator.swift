@@ -8,7 +8,7 @@
 import UIKit
 
 protocol PhotoScreenCoordinatorDelegate: AnyObject {
-    
+    func goBack(animated: Bool)
 }
 
 class PhotoScreenCoordinator: Coordinator {
@@ -48,5 +48,15 @@ class PhotoScreenCoordinator: Coordinator {
 }
 
 extension PhotoScreenCoordinator: PhotoScreenCoordinatorDelegate {
-    
+    func goBack(animated: Bool) {
+        onEnd()
+        if !animated {
+            let transition = CATransition()
+            transition.duration = 0.3
+            transition.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+            transition.type = .fade
+            rootNavigationController?.view.layer.add(transition, forKey: nil)
+        }
+        rootNavigationController?.popViewController(animated: animated)
+    }
 }

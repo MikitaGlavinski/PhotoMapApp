@@ -6,9 +6,12 @@
 //
 
 import Foundation
+import UIKit
 
 protocol PhotoScreenViewModelProtocol: AnyObject {
     func viewDidLoad()
+    func goBack(animated: Bool)
+    func loadImage(url: String, completion: @escaping (UIImage) -> ())
 }
 
 class PhotoScreenViewModel {
@@ -26,5 +29,15 @@ extension PhotoScreenViewModel: PhotoScreenViewModelProtocol {
     
     func viewDidLoad() {
         view.setupUI(with: photoModel)
+    }
+    
+    func goBack(animated: Bool) {
+        coordinator.goBack(animated: animated)
+    }
+    
+    func loadImage(url: String, completion: @escaping (UIImage) -> ()) {
+        NetworkService.shared.loadImageFrom(url: url, completion: completion) { error in
+            self.view.showError(error: error)
+        }
     }
 }

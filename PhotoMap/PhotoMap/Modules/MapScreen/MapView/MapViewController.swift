@@ -19,9 +19,9 @@ protocol MapViewInput: AnyObject {
 
 class MapViewController: UIViewController {
     
-    private var locationManager: CLLocationManager!
     var viewModel: MapViewModelProtocol!
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var locationButton: UIButton!
     
     private var photoModels = [PhotoCardModel]()
     
@@ -39,10 +39,12 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.viewDidLoad()
-        locationManager = CLLocationManager()
+        let locationManager = CLLocationManager()
         locationManager.requestWhenInUseAuthorization()
         mapView.delegate = self
         addGestures()
+        mapView.setUserTrackingMode(.follow, animated: true)
+        mapView.showsCompass = false
     }
     
     private func addGestures() {
@@ -71,7 +73,14 @@ class MapViewController: UIViewController {
     }
     
     @IBAction func changeLocationStyle(_ sender: Any) {
-        
+        if mapView.userTrackingMode == .follow {
+            mapView.setUserTrackingMode(.none, animated: true)
+            locationButton.tintColor = .darkGray
+            
+        } else {
+            mapView.setUserTrackingMode(.follow, animated: true)
+            locationButton.tintColor = .systemBlue
+        }
     }
     
     @objc private func keyboardWillAppear(_ notification: Notification) {

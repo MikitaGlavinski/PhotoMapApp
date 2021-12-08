@@ -11,11 +11,17 @@
 		FA34EF56275A13C200EC561C /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA34EF55275A13C200EC561C /* PopupView.swift */; };
 		FA34EF58275A144100EC561C /* PopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA34EF57275A144100EC561C /* PopupView.xib */; };
 		FA34EF5B275A239C00EC561C /* PhotoCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA34EF5A275A239C00EC561C /* PhotoCardModel.swift */; };
+		FA85B6FD2760BC4400B68AEC /* TimeLineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA85B6FC2760BC4400B68AEC /* TimeLineViewController.swift */; };
+		FA85B6FF2760BC7C00B68AEC /* TimeLineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA85B6FE2760BC7C00B68AEC /* TimeLineViewModel.swift */; };
+		FA85B7012760BCCF00B68AEC /* TimeLineCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA85B7002760BCCF00B68AEC /* TimeLineCoordinator.swift */; };
+		FA85B7032760CD9F00B68AEC /* TimeLineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA85B7022760CD9F00B68AEC /* TimeLineCell.swift */; };
+		FA85B7062760D37A00B68AEC /* TableViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA85B7052760D37A00B68AEC /* TableViewModels.swift */; };
+		FA85B7082760F2E200B68AEC /* CustomSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA85B7072760F2E200B68AEC /* CustomSearchBar.swift */; };
+		FA85B70A2760F2FB00B68AEC /* CustomSearchBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA85B7092760F2FB00B68AEC /* CustomSearchBar.xib */; };
 		FA990FD4275F42580074E0D9 /* PopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA990FD3275F42580074E0D9 /* PopoverView.swift */; };
 		FA990FD6275F426B0074E0D9 /* PopoverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA990FD5275F426B0074E0D9 /* PopoverView.xib */; };
 		FA990FD9275F604C0074E0D9 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = FA990FD8275F604C0074E0D9 /* Alamofire */; };
 		FA990FDB275F61950074E0D9 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA990FDA275F61950074E0D9 /* NetworkService.swift */; };
-		FA990FDD275F9D390074E0D9 /* ImageScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA990FDC275F9D390074E0D9 /* ImageScrollView.swift */; };
 		FA990FE3275FA61F0074E0D9 /* PhotoScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA990FE2275FA61F0074E0D9 /* PhotoScreenViewController.swift */; };
 		FA990FE5275FA6370074E0D9 /* PhotoScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA990FE4275FA6370074E0D9 /* PhotoScreenViewModel.swift */; };
 		FA990FE7275FA6B40074E0D9 /* PhotoScreenCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA990FE6275FA6B40074E0D9 /* PhotoScreenCoordinator.swift */; };
@@ -78,10 +84,16 @@
 		FA34EF55275A13C200EC561C /* PopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
 		FA34EF57275A144100EC561C /* PopupView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PopupView.xib; sourceTree = "<group>"; };
 		FA34EF5A275A239C00EC561C /* PhotoCardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCardModel.swift; sourceTree = "<group>"; };
+		FA85B6FC2760BC4400B68AEC /* TimeLineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLineViewController.swift; sourceTree = "<group>"; };
+		FA85B6FE2760BC7C00B68AEC /* TimeLineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLineViewModel.swift; sourceTree = "<group>"; };
+		FA85B7002760BCCF00B68AEC /* TimeLineCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLineCoordinator.swift; sourceTree = "<group>"; };
+		FA85B7022760CD9F00B68AEC /* TimeLineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLineCell.swift; sourceTree = "<group>"; };
+		FA85B7052760D37A00B68AEC /* TableViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewModels.swift; sourceTree = "<group>"; };
+		FA85B7072760F2E200B68AEC /* CustomSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSearchBar.swift; sourceTree = "<group>"; };
+		FA85B7092760F2FB00B68AEC /* CustomSearchBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomSearchBar.xib; sourceTree = "<group>"; };
 		FA990FD3275F42580074E0D9 /* PopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverView.swift; sourceTree = "<group>"; };
 		FA990FD5275F426B0074E0D9 /* PopoverView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PopoverView.xib; sourceTree = "<group>"; };
 		FA990FDA275F61950074E0D9 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
-		FA990FDC275F9D390074E0D9 /* ImageScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageScrollView.swift; sourceTree = "<group>"; };
 		FA990FE2275FA61F0074E0D9 /* PhotoScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoScreenViewController.swift; sourceTree = "<group>"; };
 		FA990FE4275FA6370074E0D9 /* PhotoScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoScreenViewModel.swift; sourceTree = "<group>"; };
 		FA990FE6275FA6B40074E0D9 /* PhotoScreenCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoScreenCoordinator.swift; sourceTree = "<group>"; };
@@ -161,7 +173,8 @@
 				FA34EF57275A144100EC561C /* PopupView.xib */,
 				FA990FD3275F42580074E0D9 /* PopoverView.swift */,
 				FA990FD5275F426B0074E0D9 /* PopoverView.xib */,
-				FA990FDC275F9D390074E0D9 /* ImageScrollView.swift */,
+				FA85B7072760F2E200B68AEC /* CustomSearchBar.swift */,
+				FA85B7092760F2FB00B68AEC /* CustomSearchBar.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -170,6 +183,50 @@
 			isa = PBXGroup;
 			children = (
 				FA34EF5A275A239C00EC561C /* PhotoCardModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		FA85B6F82760BC1200B68AEC /* TimeLine */ = {
+			isa = PBXGroup;
+			children = (
+				FA85B7042760D35F00B68AEC /* Models */,
+				FA85B6FB2760BC3200B68AEC /* TimeLineCoordinator */,
+				FA85B6FA2760BC2800B68AEC /* TimeLineViewModel */,
+				FA85B6F92760BC1F00B68AEC /* TimeLineView */,
+			);
+			path = TimeLine;
+			sourceTree = "<group>";
+		};
+		FA85B6F92760BC1F00B68AEC /* TimeLineView */ = {
+			isa = PBXGroup;
+			children = (
+				FA85B6FC2760BC4400B68AEC /* TimeLineViewController.swift */,
+				FA85B7022760CD9F00B68AEC /* TimeLineCell.swift */,
+			);
+			path = TimeLineView;
+			sourceTree = "<group>";
+		};
+		FA85B6FA2760BC2800B68AEC /* TimeLineViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				FA85B6FE2760BC7C00B68AEC /* TimeLineViewModel.swift */,
+			);
+			path = TimeLineViewModel;
+			sourceTree = "<group>";
+		};
+		FA85B6FB2760BC3200B68AEC /* TimeLineCoordinator */ = {
+			isa = PBXGroup;
+			children = (
+				FA85B7002760BCCF00B68AEC /* TimeLineCoordinator.swift */,
+			);
+			path = TimeLineCoordinator;
+			sourceTree = "<group>";
+		};
+		FA85B7042760D35F00B68AEC /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FA85B7052760D37A00B68AEC /* TableViewModels.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -281,6 +338,7 @@
 		FAA08C3F2758E8D100B7C960 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				FA85B6F82760BC1200B68AEC /* TimeLine */,
 				FA990FDE275FA5D90074E0D9 /* PhotoScreen */,
 				FAA08C62275910BE00B7C960 /* MapScreen */,
 				FAA08C58275901F300B7C960 /* RegisterScreen */,
@@ -534,6 +592,7 @@
 				FAA08C0B2758E17C00B7C960 /* LaunchScreen.storyboard in Resources */,
 				FAA08C2F2758E2BB00B7C960 /* GoogleService-Info.plist in Resources */,
 				FA990FD6275F426B0074E0D9 /* PopoverView.xib in Resources */,
+				FA85B70A2760F2FB00B68AEC /* CustomSearchBar.xib in Resources */,
 				FA34EF58275A144100EC561C /* PopupView.xib in Resources */,
 				FAA08C082758E17C00B7C960 /* Assets.xcassets in Resources */,
 				FAA08C062758E17B00B7C960 /* Main.storyboard in Resources */,
@@ -568,19 +627,23 @@
 				FAC2F300275DEE7400E36931 /* FirebaseService.swift in Sources */,
 				FAA08C532758F6CF00B7C960 /* SecureStorageService.swift in Sources */,
 				FAA08C5D2759022A00B7C960 /* RegisterViewController.swift in Sources */,
+				FA85B6FF2760BC7C00B68AEC /* TimeLineViewModel.swift in Sources */,
 				FAA08BFF2758E17B00B7C960 /* AppDelegate.swift in Sources */,
 				FAA08C6B2759117900B7C960 /* MapCoordinator.swift in Sources */,
 				FA990FE5275FA6370074E0D9 /* PhotoScreenViewModel.swift in Sources */,
+				FA85B6FD2760BC4400B68AEC /* TimeLineViewController.swift in Sources */,
 				FAA08C012758E17B00B7C960 /* SceneDelegate.swift in Sources */,
 				FAA08C5F2759025700B7C960 /* RegisterViewModel.swift in Sources */,
 				FA34EF53275A127500EC561C /* UIViewExtension.swift in Sources */,
 				FAA08C61275902A400B7C960 /* RegisterCoordinator.swift in Sources */,
 				FA34EF5B275A239C00EC561C /* PhotoCardModel.swift in Sources */,
 				FAA08C672759110200B7C960 /* MapViewController.swift in Sources */,
-				FA990FDD275F9D390074E0D9 /* ImageScrollView.swift in Sources */,
+				FA85B7012760BCCF00B68AEC /* TimeLineCoordinator.swift in Sources */,
+				FA85B7032760CD9F00B68AEC /* TimeLineCell.swift in Sources */,
 				FAC2F302275E320B00E36931 /* DictionaryHelper.swift in Sources */,
 				FAA08C502758F5D500B7C960 /* AuthViewModel.swift in Sources */,
 				FA990FE7275FA6B40074E0D9 /* PhotoScreenCoordinator.swift in Sources */,
+				FA85B7082760F2E200B68AEC /* CustomSearchBar.swift in Sources */,
 				FA34EF56275A13C200EC561C /* PopupView.swift in Sources */,
 				FAA08C4E2758F52F00B7C960 /* AuthViewController.swift in Sources */,
 				FAA08C4A2758EDD300B7C960 /* AuthCoordinator.swift in Sources */,
@@ -589,6 +652,7 @@
 				FAA08C692759112C00B7C960 /* MapViewModel.swift in Sources */,
 				FAA08C462758ED5E00B7C960 /* Coordinator.swift in Sources */,
 				FAA08C552758FDB800B7C960 /* AuthorizationService.swift in Sources */,
+				FA85B7062760D37A00B68AEC /* TableViewModels.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

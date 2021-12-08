@@ -23,14 +23,22 @@ class MapCoordinator: Coordinator {
     func start() {
         guard let rootNavigationController = rootNavigationController else { return }
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let view = storyboard.instantiateViewController(withIdentifier: "Map") as? MapViewController else { return }
-        let tabBarController = UITabBarController()
-        let viewModel = MapViewModel()
-        view.viewModel = viewModel
-        viewModel.view = view
-        viewModel.coordinator = self
         
-        tabBarController.setViewControllers([view], animated: false)
+        guard let mapView = storyboard.instantiateViewController(withIdentifier: "Map") as? MapViewController else { return }
+        let tabBarController = UITabBarController()
+        let mapViewModel = MapViewModel()
+        mapView.viewModel = mapViewModel
+        mapViewModel.view = mapView
+        mapViewModel.coordinator = self
+        
+        let timeLineCoordinator = TimeLineCoordinator(rootNavigationController: rootNavigationController)
+        guard let timeLineView = storyboard.instantiateViewController(withIdentifier: "TimeLine") as? TimeLineViewController else { return }
+        let timeLineViewModel = TimeLineViewModel()
+        timeLineView.viewModel = timeLineViewModel
+        timeLineViewModel.view = timeLineView
+        timeLineViewModel.coordinator = timeLineCoordinator
+        
+        tabBarController.setViewControllers([mapView, timeLineView], animated: false)
         rootNavigationController.navigationBar.isHidden = true
         rootNavigationController.setViewControllers([tabBarController], animated: true)
     }
