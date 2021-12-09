@@ -9,6 +9,7 @@ import UIKit
 
 protocol MapCoordinatorDelegate: AnyObject {
     func showPhoto(with model: PhotoCardModel)
+    func showCategories()
 }
 
 class MapCoordinator: Coordinator {
@@ -65,5 +66,15 @@ extension MapCoordinator: MapCoordinatorDelegate {
         }
         photoCoordinator.start()
         add(childCoordinator: photoCoordinator)
+    }
+    
+    func showCategories() {
+        guard let rootNavigationController = rootNavigationController else { return }
+        let categoryCoordinator = CategoryCoordinator(rootNavigationController: rootNavigationController)
+        categoryCoordinator.onEnd = { [unowned categoryCoordinator] in
+            self.remove(childCoordinator: categoryCoordinator)
+        }
+        categoryCoordinator.start()
+        add(childCoordinator: categoryCoordinator)
     }
 }

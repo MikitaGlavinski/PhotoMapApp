@@ -11,6 +11,8 @@ protocol TimeLineViewModelProtocol: AnyObject {
     func viewDidLoad()
     func loadImage(url: String, completion: @escaping (UIImage) -> ())
     func showImage(cellModel: TimeLineCellModel)
+    func showCategories()
+    func setSelectedCategories()
 }
 
 class TimeLineViewModel {
@@ -21,6 +23,18 @@ class TimeLineViewModel {
 }
 
 extension TimeLineViewModel: TimeLineViewModelProtocol {
+    
+    func setSelectedCategories() {
+        let categories = SecureStorageService.shared.obtainCategories()
+        var selectedCategories = [Category]()
+        for category in categories {
+            if category.isSelected {
+                guard let selectedCategory = Category.init(rawValue: category.title) else { return }
+                selectedCategories.append(selectedCategory)
+            }
+        }
+        view.setSelectedCategories(categories: selectedCategories)
+    }
     
     func viewDidLoad() {
         FirebaseService.shared.getUserPhotos { result in
@@ -53,5 +67,9 @@ extension TimeLineViewModel: TimeLineViewModelProtocol {
         guard let index = photoRestModels.firstIndex(where: {$0.id == cellModel.id}) else { return }
         let photoCardModel = PhotoCardModel(restModel: photoRestModels[index])
         coordinator.showImage(model: photoCardModel)
+    }
+    
+    func showCategories() {
+        coordinator.showCategories()
     }
 }

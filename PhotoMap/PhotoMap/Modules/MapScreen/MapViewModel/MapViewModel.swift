@@ -16,6 +16,7 @@ protocol MapViewModelProtocol: AnyObject {
     func updatePhotoModel(model: PhotoCardModel)
     func loadImageFrom(url: String, completion: @escaping (UIImage) -> ())
     func showPhoto(with model: PhotoCardModel)
+    func showCategories()
 }
 
 class MapViewModel: NSObject {
@@ -139,6 +140,10 @@ extension MapViewModel: MapViewModelProtocol {
     
     func showPhoto(with model: PhotoCardModel) {
         coordinator.showPhoto(with: model)
+    }
+    
+    func showCategories() {
+        coordinator.showCategories()
     }
 }
 

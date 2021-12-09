@@ -9,6 +9,7 @@ import UIKit
 
 protocol TimeLineCoordinatorDelegate: AnyObject {
     func showImage(model: PhotoCardModel)
+    func showCategories()
 }
 
 class TimeLineCoordinator: Coordinator {
@@ -46,5 +47,15 @@ extension TimeLineCoordinator: TimeLineCoordinatorDelegate {
         }
         photoCoordinator.start()
         add(childCoordinator: photoCoordinator)
+    }
+    
+    func showCategories() {
+        guard let rootNavigationController = rootNavigationController else { return }
+        let categoryCoordinator = CategoryCoordinator(rootNavigationController: rootNavigationController)
+        categoryCoordinator.onEnd = { [unowned categoryCoordinator] in
+            self.remove(childCoordinator: categoryCoordinator)
+        }
+        categoryCoordinator.start()
+        add(childCoordinator: categoryCoordinator)
     }
 }

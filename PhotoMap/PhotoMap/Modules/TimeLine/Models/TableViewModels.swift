@@ -24,14 +24,16 @@ struct TimeLineCellModel {
     var date: Double
     var secondaryLabelText: String
     var sectionTitle: String
+    var category: String
     
-    init(id: String, imageUrl: String, text: String, date: Double, stringDate: String, sectionTitle: String) {
+    init(id: String, imageUrl: String, text: String, date: Double, stringDate: String, sectionTitle: String, category: String) {
         self.id = id
         self.imageUrl = imageUrl
         self.infoLabelText = text
         self.date = date
         self.secondaryLabelText = stringDate
         self.sectionTitle = sectionTitle
+        self.category = category
     }
     
     init(photoRestModel: PhotoRestModel) {
@@ -45,5 +47,6 @@ struct TimeLineCellModel {
         self.secondaryLabelText = formatter.string(from: date) + " / \(photoRestModel.category)"
         formatter.dateFormat = "MMMM yyyy"
         self.sectionTitle = formatter.string(from: date)
+        self.category = photoRestModel.category
     }
 }

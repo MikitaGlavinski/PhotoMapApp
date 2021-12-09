@@ -49,7 +49,7 @@ class MapViewController: UIViewController {
     
     private func addGestures() {
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
-        longPress.minimumPressDuration = 1.5
+        longPress.minimumPressDuration = 1.0
         mapView.addGestureRecognizer(longPress)
     }
     
@@ -76,7 +76,6 @@ class MapViewController: UIViewController {
         if mapView.userTrackingMode == .follow {
             mapView.setUserTrackingMode(.none, animated: true)
             locationButton.tintColor = .darkGray
-            
         } else {
             mapView.setUserTrackingMode(.follow, animated: true)
             locationButton.tintColor = .systemBlue
@@ -234,5 +233,13 @@ extension MapViewController: MKMapViewDelegate {
         view.subviews.last?.frame = CGRect(x: 0, y: 0, width: 40, height: 50)
         view.bounds = CGRect(x: 0, y: 0, width: 40, height: 50)
         view.centerOffset = CGPoint(x: 0, y: -25)
+    }
+    
+    func mapView(_ mapView: MKMapView, didChange mode: MKUserTrackingMode, animated: Bool) {
+        if mapView.userTrackingMode == .none {
+            locationButton.tintColor = .darkGray
+        } else {
+            locationButton.tintColor = .systemBlue
+        }
     }
 }

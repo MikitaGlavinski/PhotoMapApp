@@ -11,6 +11,11 @@
 		FA34EF56275A13C200EC561C /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA34EF55275A13C200EC561C /* PopupView.swift */; };
 		FA34EF58275A144100EC561C /* PopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA34EF57275A144100EC561C /* PopupView.xib */; };
 		FA34EF5B275A239C00EC561C /* PhotoCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA34EF5A275A239C00EC561C /* PhotoCardModel.swift */; };
+		FA5630CB2761EE20004202AE /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5630CA2761EE20004202AE /* CategoryViewController.swift */; };
+		FA5630CD2761EE68004202AE /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5630CC2761EE68004202AE /* CategoryViewModel.swift */; };
+		FA5630CF2761EEA7004202AE /* CategoryCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5630CE2761EEA7004202AE /* CategoryCoordinator.swift */; };
+		FA5630D22761F096004202AE /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5630D12761F096004202AE /* CategoryCell.swift */; };
+		FA5630D42761F0C7004202AE /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5630D32761F0C7004202AE /* CategoryModel.swift */; };
 		FA85B6FD2760BC4400B68AEC /* TimeLineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA85B6FC2760BC4400B68AEC /* TimeLineViewController.swift */; };
 		FA85B6FF2760BC7C00B68AEC /* TimeLineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA85B6FE2760BC7C00B68AEC /* TimeLineViewModel.swift */; };
 		FA85B7012760BCCF00B68AEC /* TimeLineCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA85B7002760BCCF00B68AEC /* TimeLineCoordinator.swift */; };
@@ -84,6 +89,11 @@
 		FA34EF55275A13C200EC561C /* PopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
 		FA34EF57275A144100EC561C /* PopupView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PopupView.xib; sourceTree = "<group>"; };
 		FA34EF5A275A239C00EC561C /* PhotoCardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCardModel.swift; sourceTree = "<group>"; };
+		FA5630CA2761EE20004202AE /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
+		FA5630CC2761EE68004202AE /* CategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
+		FA5630CE2761EEA7004202AE /* CategoryCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCoordinator.swift; sourceTree = "<group>"; };
+		FA5630D12761F096004202AE /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
+		FA5630D32761F0C7004202AE /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
 		FA85B6FC2760BC4400B68AEC /* TimeLineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLineViewController.swift; sourceTree = "<group>"; };
 		FA85B6FE2760BC7C00B68AEC /* TimeLineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLineViewModel.swift; sourceTree = "<group>"; };
 		FA85B7002760BCCF00B68AEC /* TimeLineCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLineCoordinator.swift; sourceTree = "<group>"; };
@@ -185,6 +195,50 @@
 				FA34EF5A275A239C00EC561C /* PhotoCardModel.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		FA5630C62761EDEA004202AE /* CategoryScreen */ = {
+			isa = PBXGroup;
+			children = (
+				FA5630D02761F079004202AE /* CategoryModels */,
+				FA5630C92761EE08004202AE /* CategoryCoordinator */,
+				FA5630C82761EDFC004202AE /* CategoryViewModel */,
+				FA5630C72761EDF4004202AE /* CategoryView */,
+			);
+			path = CategoryScreen;
+			sourceTree = "<group>";
+		};
+		FA5630C72761EDF4004202AE /* CategoryView */ = {
+			isa = PBXGroup;
+			children = (
+				FA5630D12761F096004202AE /* CategoryCell.swift */,
+				FA5630CA2761EE20004202AE /* CategoryViewController.swift */,
+			);
+			path = CategoryView;
+			sourceTree = "<group>";
+		};
+		FA5630C82761EDFC004202AE /* CategoryViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				FA5630CC2761EE68004202AE /* CategoryViewModel.swift */,
+			);
+			path = CategoryViewModel;
+			sourceTree = "<group>";
+		};
+		FA5630C92761EE08004202AE /* CategoryCoordinator */ = {
+			isa = PBXGroup;
+			children = (
+				FA5630CE2761EEA7004202AE /* CategoryCoordinator.swift */,
+			);
+			path = CategoryCoordinator;
+			sourceTree = "<group>";
+		};
+		FA5630D02761F079004202AE /* CategoryModels */ = {
+			isa = PBXGroup;
+			children = (
+				FA5630D32761F0C7004202AE /* CategoryModel.swift */,
+			);
+			path = CategoryModels;
 			sourceTree = "<group>";
 		};
 		FA85B6F82760BC1200B68AEC /* TimeLine */ = {
@@ -338,6 +392,7 @@
 		FAA08C3F2758E8D100B7C960 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				FA5630C62761EDEA004202AE /* CategoryScreen */,
 				FA85B6F82760BC1200B68AEC /* TimeLine */,
 				FA990FDE275FA5D90074E0D9 /* PhotoScreen */,
 				FAA08C62275910BE00B7C960 /* MapScreen */,
@@ -639,15 +694,20 @@
 				FA34EF5B275A239C00EC561C /* PhotoCardModel.swift in Sources */,
 				FAA08C672759110200B7C960 /* MapViewController.swift in Sources */,
 				FA85B7012760BCCF00B68AEC /* TimeLineCoordinator.swift in Sources */,
+				FA5630D42761F0C7004202AE /* CategoryModel.swift in Sources */,
 				FA85B7032760CD9F00B68AEC /* TimeLineCell.swift in Sources */,
 				FAC2F302275E320B00E36931 /* DictionaryHelper.swift in Sources */,
 				FAA08C502758F5D500B7C960 /* AuthViewModel.swift in Sources */,
+				FA5630CB2761EE20004202AE /* CategoryViewController.swift in Sources */,
 				FA990FE7275FA6B40074E0D9 /* PhotoScreenCoordinator.swift in Sources */,
 				FA85B7082760F2E200B68AEC /* CustomSearchBar.swift in Sources */,
 				FA34EF56275A13C200EC561C /* PopupView.swift in Sources */,
+				FA5630D22761F096004202AE /* CategoryCell.swift in Sources */,
 				FAA08C4E2758F52F00B7C960 /* AuthViewController.swift in Sources */,
+				FA5630CD2761EE68004202AE /* CategoryViewModel.swift in Sources */,
 				FAA08C4A2758EDD300B7C960 /* AuthCoordinator.swift in Sources */,
 				FA990FE3275FA61F0074E0D9 /* PhotoScreenViewController.swift in Sources */,
+				FA5630CF2761EEA7004202AE /* CategoryCoordinator.swift in Sources */,
 				FAA08C572758FEA400B7C960 /* NetworkError.swift in Sources */,
 				FAA08C692759112C00B7C960 /* MapViewModel.swift in Sources */,
 				FAA08C462758ED5E00B7C960 /* Coordinator.swift in Sources */,

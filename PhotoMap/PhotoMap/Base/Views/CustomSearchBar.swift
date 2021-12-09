@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol CustomSearchBarDelegate: AnyObject {
+    func searchTextDidChange(searchBar: CustomSearchBar, text: String)
+}
+
 @IBDesignable
 class CustomSearchBar: UIView {
     
@@ -15,6 +19,8 @@ class CustomSearchBar: UIView {
     @IBOutlet var widthConstraint: NSLayoutConstraint!
     @IBOutlet var rightConstraint: NSLayoutConstraint!
     @IBOutlet weak var textField: UITextField!
+    
+    weak var delegate: CustomSearchBarDelegate!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -37,6 +43,13 @@ class CustomSearchBar: UIView {
         leftConstraint.constant = bounds.midX - 65
         
         textField.delegate = self
+        
+        addGestures()
+    }
+    
+    private func addGestures() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(startEditing))
+        addGestureRecognizer(tap)
     }
     
     func animateActive() {
@@ -56,6 +69,10 @@ class CustomSearchBar: UIView {
             self.layoutIfNeeded()
         }
     }
+    
+    @objc private func startEditing() {
+        textField.becomeFirstResponder()
+    }
 }
 
 extension CustomSearchBar: UITextFieldDelegate {
@@ -65,5 +82,9 @@ extension CustomSearchBar: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         animateUnactive()
+    }
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        delegate.searchTextDidChange(searchBar: self, text: textField.text ?? "")
     }
 }
