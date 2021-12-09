@@ -16,7 +16,7 @@ protocol MapViewModelProtocol: AnyObject {
     func updatePhotoModel(model: PhotoCardModel)
     func loadImageFrom(url: String, completion: @escaping (UIImage) -> ())
     func showPhoto(with model: PhotoCardModel)
-    func showCategories()
+    func showCategories(selectedCategories: [Category])
 }
 
 class MapViewModel: NSObject {
@@ -25,6 +25,10 @@ class MapViewModel: NSObject {
     private var touchCoordinate: CLLocationCoordinate2D?
     
     private var queue = DispatchQueue(label: "MapViewModelQueue", qos: .background)
+    
+    private func configPhotoModels(models: [PhotoCardModel]) {
+        
+    }
 }
 
 extension MapViewModel: MapViewModelProtocol {
@@ -142,8 +146,17 @@ extension MapViewModel: MapViewModelProtocol {
         coordinator.showPhoto(with: model)
     }
     
-    func showCategories() {
-        coordinator.showCategories()
+    func showCategories(selectedCategories: [Category]) {
+        var categories = [
+            CategoryModel(title: "FRIENDS", isSelected: false),
+            CategoryModel(title: "NATURE", isSelected: false),
+            CategoryModel(title: "DEFAULT", isSelected: false)
+        ]
+        for category in selectedCategories {
+            guard let index = categories.firstIndex(where: {$0.title == category.rawValue}) else { return }
+            categories[index].isSelected = true
+        }
+        coordinator.showCategories(categories: categories, delegate: self)
     }
 }
 
@@ -164,5 +177,19 @@ extension MapViewModel: UINavigationControllerDelegate, UIImagePickerControllerD
             lon: touchCoordinate.longitude
         )
         view.showPopupView(with: cardModel)
+    }
+}
+
+extension MapViewModel: CategorySelectionDelegate {
+    
+    func updateSelectedCategories(categories: [CategoryModel]) {
+        var selectedCategories = [Category]()
+        for category in categories {
+            if category.isSelected {
+                guard let selectedCategory = Category.init(rawValue: category.title) else { return }
+                selectedCategories.append(selectedCategory)
+            }
+        }
+        view.updateSelectedCategories(selectedCategories: selectedCategories)
     }
 }

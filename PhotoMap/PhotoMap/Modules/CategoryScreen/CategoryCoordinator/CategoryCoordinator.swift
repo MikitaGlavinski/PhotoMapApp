@@ -16,10 +16,14 @@ class CategoryCoordinator: Coordinator {
     private weak var rootNavigationController: UINavigationController?
     private var childCoordinators = [Coordinator]()
     
+    var delegate: CategorySelectionDelegate!
+    var categories: [CategoryModel]
     var onEnd: (() -> ())!
     
-    init(rootNavigationController: UINavigationController) {
+    init(rootNavigationController: UINavigationController, categories: [CategoryModel], delegate: CategorySelectionDelegate) {
         self.rootNavigationController = rootNavigationController
+        self.categories = categories
+        self.delegate = delegate
     }
     
     func start() {
@@ -30,13 +34,11 @@ class CategoryCoordinator: Coordinator {
         view.viewModel = viewModel
         viewModel.view = view
         viewModel.coordinator = self
+        viewModel.delegate = delegate
+        viewModel.categories = categories
         
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-        transition.type = .fade
-        rootNavigationController.view.layer.add(transition, forKey: nil)
-        rootNavigationController.pushViewController(view, animated: false)
+        view.modalPresentationStyle = .fullScreen
+        rootNavigationController.present(view, animated: true, completion: nil)
     }
     
     func add(childCoordinator: Coordinator) {
@@ -55,11 +57,6 @@ extension CategoryCoordinator: CategoryCoordinatorDelegate {
     
     func goBack() {
         onEnd()
-        let transition = CATransition()
-        transition.duration = 0.3
-        transition.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-        transition.type = .fade
-        rootNavigationController?.view.layer.add(transition, forKey: nil)
-        rootNavigationController?.popViewController(animated: false)
+        rootNavigationController?.viewControllers.last?.dismiss(animated: true, completion: nil)
     }
 }

@@ -15,6 +15,7 @@ protocol MapViewInput: AnyObject {
     func showPopupView(with model: PhotoCardModel)
     func showError(error: Error)
     func addPin(model: PhotoCardModel)
+    func updateSelectedCategories(selectedCategories: [Category])
 }
 
 class MapViewController: UIViewController {
@@ -24,11 +25,22 @@ class MapViewController: UIViewController {
     @IBOutlet weak var locationButton: UIButton!
     
     private var photoModels = [PhotoCardModel]()
+    private var selectedCategories: [Category] = [.friends, .nature, .standart]
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillAppear),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -39,10 +51,15 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.viewDidLoad()
+        setupUI()
+        addGestures()
+    }
+    
+    private func setupUI() {
         let locationManager = CLLocationManager()
         locationManager.requestWhenInUseAuthorization()
+        
         mapView.delegate = self
-        addGestures()
         mapView.setUserTrackingMode(.follow, animated: true)
         mapView.showsCompass = false
     }
@@ -54,7 +71,6 @@ class MapViewController: UIViewController {
     }
     
     private func showActionSheet(touchCoordinate: CLLocationCoordinate2D) {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let takePhotoAction = UIAlertAction(title: "Take a Picture", style: .default) { _ in
             self.viewModel.takePhoto(touchCoordinate: touchCoordinate)
         }
@@ -62,9 +78,15 @@ class MapViewController: UIViewController {
             self.viewModel.choosePhoto(touchCoordinate: touchCoordinate)
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        alert.addAction(takePhotoAction)
-        alert.addAction(choosePhotoAction)
-        alert.addAction(cancelAction)
+        
+        presentActionSheet(actions: [takePhotoAction, choosePhotoAction, cancelAction])
+    }
+    
+    private func presentActionSheet(actions: [UIAlertAction]) {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        for action in actions {
+            alert.addAction(action)
+        }
         present(alert, animated: true, completion: nil)
     }
     
@@ -80,6 +102,10 @@ class MapViewController: UIViewController {
             mapView.setUserTrackingMode(.follow, animated: true)
             locationButton.tintColor = .systemBlue
         }
+    }
+    
+    @IBAction func showCategories(_ sender: Any) {
+        viewModel.showCategories(selectedCategories: selectedCategories)
     }
     
     @objc private func keyboardWillAppear(_ notification: Notification) {
@@ -102,6 +128,8 @@ class MapViewController: UIViewController {
 extension MapViewController: MapViewInput {
     
     func setupAnnotations(models: [PhotoCardModel]) {
+        photoModels = []
+        mapView.removeAnnotations(mapView.annotations)
         for model in models {
             addPin(model: model)
         }
@@ -112,7 +140,14 @@ extension MapViewController: MapViewInput {
     }
     
     func showPopupView(with model: PhotoCardModel) {
-        let popup = PopupView(frame: CGRect(x: 20.0, y: 100.0, width: UIScreen.main.bounds.width - 40.0, height: UIScreen.main.bounds.height - 200.0), model: model)
+        let popup = PopupView(
+            frame: CGRect(
+            x: 20.0,
+            y: 100.0,
+            width: UIScreen.main.bounds.width - 40.0,
+            height: UIScreen.main.bounds.height - 200.0),
+            model: model
+        )
         popup.delegate = self
         view.addSubview(popup)
     }
@@ -127,20 +162,28 @@ extension MapViewController: MapViewInput {
     func addPin(model: PhotoCardModel) {
         if let index = photoModels.firstIndex(where: {$0.id == model.id}) {
             photoModels[index] = model
+            guard let annotationIndex = mapView.annotations.firstIndex(where: {$0.title == model.id}) else { return }
+            mapView.removeAnnotation(mapView.annotations[annotationIndex])
         } else {
             photoModels.append(model)
+        }
+        if selectedCategories.contains(model.category) {
             let pin = MKPointAnnotation()
             pin.coordinate = CLLocationCoordinate2D(latitude: model.lat, longitude: model.lon)
             pin.title = model.id
             mapView.addAnnotation(pin)
         }
     }
+    
+    func updateSelectedCategories(selectedCategories: [Category]) {
+        self.selectedCategories = selectedCategories
+        setupAnnotations(models: photoModels)
+    }
 }
 
 extension MapViewController: PopupViewDelegate {
     
     func changeCategory(completion: @escaping (Category?) -> ()) {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let friendsAction = UIAlertAction(title: "FRIENDS", style: .default) { _ in
             completion(.friends)
         }
@@ -151,11 +194,7 @@ extension MapViewController: PopupViewDelegate {
             completion(.standart)
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        alert.addAction(friendsAction)
-        alert.addAction(natureAction)
-        alert.addAction(defaultAction)
-        alert.addAction(cancelAction)
-        present(alert, animated: true, completion: nil)
+        presentActionSheet(actions: [friendsAction, natureAction, defaultAction, cancelAction])
     }
     
     func savePhoto(model: PhotoCardModel) {
@@ -236,10 +275,6 @@ extension MapViewController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, didChange mode: MKUserTrackingMode, animated: Bool) {
-        if mapView.userTrackingMode == .none {
-            locationButton.tintColor = .darkGray
-        } else {
-            locationButton.tintColor = .systemBlue
-        }
+        locationButton.tintColor = mapView.userTrackingMode == .none ? .darkGray : .systemBlue
     }
 }

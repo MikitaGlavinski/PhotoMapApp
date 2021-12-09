@@ -46,20 +46,16 @@ class PopupView: UIView {
         view.layer.shadowOpacity = 0.6
         view.layer.shadowOffset = CGSize(width: 4.0, height: 4.0)
         
-        imageBackView.layer.cornerRadius = 3.0
         imageBackView.layer.shadowColor = UIColor.black.cgColor
         imageBackView.layer.shadowRadius = 3.0
         imageBackView.layer.shadowOpacity = 0.8
         imageBackView.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
-        imageBackView.layer.masksToBounds = false
 
         mainImageView.image = model.image
 
         dateLabel.text = model.stringDate
 
         handleCategory(category: model.category)
-        let categoryTap = UITapGestureRecognizer(target: self, action: #selector(changeCategory))
-        categoryLabel.addGestureRecognizer(categoryTap)
 
         textView.layer.cornerRadius = 3.0
         textView.layer.borderWidth = 1.0
@@ -71,6 +67,9 @@ class PopupView: UIView {
     }
     
     private func addGestures() {
+        let categoryTap = UITapGestureRecognizer(target: self, action: #selector(changeCategory))
+        categoryLabel.addGestureRecognizer(categoryTap)
+        
         let mainTap = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         addGestureRecognizer(mainTap)
         

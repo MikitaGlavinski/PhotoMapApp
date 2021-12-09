@@ -346,23 +346,6 @@
             </objects>
             <point key="canvasLocation" x="365" y="-529"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="BAJ-tZ-SoC">
-            <objects>
-                <viewController id="WlK-79-HI1" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="472-Go-Ftn">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="veG-8J-WAg"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" systemItem="more" id="tHC-Y4-KLK"/>
-                    <navigationItem key="navigationItem" id="A4A-hS-Qc0"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gDy-zy-Lna" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-484" y="757"/>
-        </scene>
         <!--Map-->
         <scene sceneID="vSV-re-2JW">
             <objects>
@@ -400,15 +383,30 @@
                                     <action selector="getPhoto:" destination="c8i-IG-g3K" eventType="touchUpInside" id="npb-eA-bfQ"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ts6-sd-yhA">
+                                <rect key="frame" x="20" y="44" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="51R-pp-Yxs"/>
+                                    <constraint firstAttribute="width" constant="40" id="drK-10-p2D"/>
+                                </constraints>
+                                <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="menubar.arrow.up.rectangle" catalog="system"/>
+                                <connections>
+                                    <action selector="showCategories:" destination="c8i-IG-g3K" eventType="touchUpInside" id="XKJ-e8-wbj"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Hef-DW-Eyo"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="ts6-sd-yhA" firstAttribute="top" secondItem="Tzb-fr-ep9" secondAttribute="top" constant="44" id="4dB-7x-v2m"/>
                             <constraint firstAttribute="trailing" secondItem="kUO-Kt-ygW" secondAttribute="trailing" constant="15" id="5Tb-FP-43Y"/>
                             <constraint firstItem="P37-9H-pSZ" firstAttribute="top" secondItem="Tzb-fr-ep9" secondAttribute="top" constant="44" id="5pe-hx-qSO"/>
                             <constraint firstItem="kUO-Kt-ygW" firstAttribute="top" secondItem="Tzb-fr-ep9" secondAttribute="top" constant="44" id="BAq-vI-4SD"/>
                             <constraint firstItem="kUO-Kt-ygW" firstAttribute="leading" secondItem="P37-9H-pSZ" secondAttribute="trailing" constant="20" id="CHv-BC-P2f"/>
                             <constraint firstAttribute="top" secondItem="4gI-PG-NY8" secondAttribute="top" id="Pui-LW-PKZ"/>
+                            <constraint firstItem="ts6-sd-yhA" firstAttribute="leading" secondItem="Hef-DW-Eyo" secondAttribute="leading" constant="20" id="VHV-12-xLU"/>
                             <constraint firstItem="4gI-PG-NY8" firstAttribute="leading" secondItem="Tzb-fr-ep9" secondAttribute="leading" id="bmQ-pF-HVP"/>
                             <constraint firstAttribute="trailing" secondItem="4gI-PG-NY8" secondAttribute="trailing" id="x8M-ZO-26f"/>
                             <constraint firstItem="Hef-DW-Eyo" firstAttribute="bottom" secondItem="4gI-PG-NY8" secondAttribute="bottom" id="y5E-Df-T9s"/>
@@ -586,7 +584,6 @@
                     <connections>
                         <segue destination="c8i-IG-g3K" kind="relationship" relationship="viewControllers" id="pra-Xn-5YM"/>
                         <segue destination="xAw-Uy-BPh" kind="relationship" relationship="viewControllers" id="Qs1-pF-FPG"/>
-                        <segue destination="WlK-79-HI1" kind="relationship" relationship="viewControllers" id="CWK-VS-69N"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cwB-dK-B4J" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -601,6 +598,7 @@
         <image name="clock.fill" catalog="system" width="128" height="121"/>
         <image name="location.circle" catalog="system" width="128" height="121"/>
         <image name="map" catalog="system" width="128" height="110"/>
+        <image name="menubar.arrow.up.rectangle" catalog="system" width="128" height="93"/>
         <systemColor name="linkColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

@@ -57,6 +57,7 @@ class PopoverView: UIView {
         backimageView.layer.masksToBounds = false
         
         textLabel.text = model.text
+        
         let date = Date(timeIntervalSince1970: model.date)
         let formatter = DateFormatter()
         formatter.dateFormat = "MM-dd-yyyy"

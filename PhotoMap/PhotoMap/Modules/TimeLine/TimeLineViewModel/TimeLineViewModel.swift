@@ -12,7 +12,7 @@ protocol TimeLineViewModelProtocol: AnyObject {
     func loadImage(url: String, completion: @escaping (UIImage) -> ())
     func showImage(cellModel: TimeLineCellModel)
     func showCategories()
-    func setSelectedCategories()
+    func showSearchItems(by text: String)
 }
 
 class TimeLineViewModel {
@@ -20,28 +20,52 @@ class TimeLineViewModel {
     var coordinator: TimeLineCoordinatorDelegate!
     
     private var photoRestModels = [PhotoRestModel]()
+    
+    private var sections = [TimeLineSection]()
+    private var filteredSections = [TimeLineSection]()
+    private var selectedCategories: [Category] = [.friends, .nature, .standart]
+    
+    private func filterSelectedCategories() {
+        filteredSections = sections.compactMap({ section in
+            var filteredRows = [TimeLineCellModel]()
+            for row in section.rows {
+                let category = Category.init(rawValue: row.category) ?? .friends
+                if selectedCategories.contains(category) {
+                    filteredRows.append(row)
+                }
+            }
+            return TimeLineSection(title: section.title, rows: filteredRows)
+        })
+    }
+    
+    private func filterSectionsWith(text: String) {
+        if text == "" {
+            filterSelectedCategories()
+        } else {
+            filteredSections = sections.compactMap({ section in
+                var filteredRows = [TimeLineCellModel]()
+                for cell in section.rows {
+                    let category = Category.init(rawValue: cell.category) ?? .friends
+                    let selectCategoryValue = selectedCategories.count > 0 ? selectedCategories.contains(category) : false
+                    if cell.infoLabelText.contains("#\(text)") && selectCategoryValue {
+                        filteredRows.append(cell)
+                    }
+                }
+                return TimeLineSection(title: section.title, rows: filteredRows)
+            })
+        }
+    }
 }
 
 extension TimeLineViewModel: TimeLineViewModelProtocol {
-    
-    func setSelectedCategories() {
-        let categories = SecureStorageService.shared.obtainCategories()
-        var selectedCategories = [Category]()
-        for category in categories {
-            if category.isSelected {
-                guard let selectedCategory = Category.init(rawValue: category.title) else { return }
-                selectedCategories.append(selectedCategory)
-            }
-        }
-        view.setSelectedCategories(categories: selectedCategories)
-    }
     
     func viewDidLoad() {
         FirebaseService.shared.getUserPhotos { result in
             switch result {
             case .success(let restModels):
                 self.photoRestModels = restModels
-                let cellModels = restModels.compactMap({TimeLineCellModel(photoRestModel: $0)}).sorted(by: {$0.date > $1.date})
+                let cellModels = restModels.compactMap({TimeLineCellModel(photoRestModel: $0)})
+                    .sorted(by: {$0.date > $1.date})
                 var sections = [TimeLineSection]()
                 for cell in cellModels {
                     guard let index = sections.firstIndex(where: {$0.title == cell.sectionTitle}) else {
@@ -50,7 +74,9 @@ extension TimeLineViewModel: TimeLineViewModelProtocol {
                     }
                     sections[index].rows.append(cell)
                 }
-                self.view.setupSectioList(sections: sections)
+                self.sections = sections
+                self.filterSelectedCategories()
+                self.view.setupSectionList(sections: self.filteredSections)
             case .failure(let error):
                 self.view.showError(error: error)
             }
@@ -70,6 +96,35 @@ extension TimeLineViewModel: TimeLineViewModelProtocol {
     }
     
     func showCategories() {
-        coordinator.showCategories()
+        var categories = [
+            CategoryModel(title: "FRIENDS", isSelected: false),
+            CategoryModel(title: "NATURE", isSelected: false),
+            CategoryModel(title: "DEFAULT", isSelected: false)
+        ]
+        for category in selectedCategories {
+            guard let index = categories.firstIndex(where: {$0.title == category.rawValue}) else { return }
+            categories[index].isSelected = true
+        }
+        coordinator.showCategories(categories: categories, delegate: self)
+    }
+    
+    func showSearchItems(by text: String) {
+        filterSectionsWith(text: text)
+        view.setupSectionList(sections: filteredSections)
+    }
+}
+
+extension TimeLineViewModel: CategorySelectionDelegate {
+    func updateSelectedCategories(categories: [CategoryModel]) {
+        var selectedCategories = [Category]()
+        for category in categories {
+            if category.isSelected {
+                guard let selectedCategory = Category.init(rawValue: category.title) else { return }
+                selectedCategories.append(selectedCategory)
+            }
+        }
+        self.selectedCategories = selectedCategories
+        self.filterSelectedCategories()
+        view.setupSectionList(sections: filteredSections)
     }
 }

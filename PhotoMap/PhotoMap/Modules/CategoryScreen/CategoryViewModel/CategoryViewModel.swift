@@ -7,6 +7,10 @@
 
 import Foundation
 
+protocol CategorySelectionDelegate: AnyObject {
+    func updateSelectedCategories(categories: [CategoryModel])
+}
+
 protocol CategoryViewModelProtocol: AnyObject {
     func viewDidLoad()
     func saveCategories(categories: [CategoryModel])
@@ -15,17 +19,18 @@ protocol CategoryViewModelProtocol: AnyObject {
 class CategoryViewModel {
     weak var view: CategoryViewInput!
     var coordinator: CategoryCoordinatorDelegate!
+    var delegate: CategorySelectionDelegate!
+    var categories: [CategoryModel]!
 }
 
 extension CategoryViewModel: CategoryViewModelProtocol {
     
     func viewDidLoad() {
-        let categories = SecureStorageService.shared.obtainCategories()
         view.setCategories(categories: categories)
     }
     
     func saveCategories(categories: [CategoryModel]) {
-        SecureStorageService.shared.saveCategories(categories: categories)
+        delegate.updateSelectedCategories(categories: categories)
         coordinator.goBack()
     }
 }

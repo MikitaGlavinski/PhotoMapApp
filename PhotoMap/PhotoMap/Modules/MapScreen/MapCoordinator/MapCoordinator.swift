@@ -9,7 +9,7 @@ import UIKit
 
 protocol MapCoordinatorDelegate: AnyObject {
     func showPhoto(with model: PhotoCardModel)
-    func showCategories()
+    func showCategories(categories: [CategoryModel], delegate: CategorySelectionDelegate)
 }
 
 class MapCoordinator: Coordinator {
@@ -68,9 +68,9 @@ extension MapCoordinator: MapCoordinatorDelegate {
         add(childCoordinator: photoCoordinator)
     }
     
-    func showCategories() {
+    func showCategories(categories: [CategoryModel], delegate: CategorySelectionDelegate) {
         guard let rootNavigationController = rootNavigationController else { return }
-        let categoryCoordinator = CategoryCoordinator(rootNavigationController: rootNavigationController)
+        let categoryCoordinator = CategoryCoordinator(rootNavigationController: rootNavigationController, categories: categories, delegate: delegate)
         categoryCoordinator.onEnd = { [unowned categoryCoordinator] in
             self.remove(childCoordinator: categoryCoordinator)
         }

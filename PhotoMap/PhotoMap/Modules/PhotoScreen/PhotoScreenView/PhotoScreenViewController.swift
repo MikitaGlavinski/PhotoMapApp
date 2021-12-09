@@ -88,6 +88,18 @@ class PhotoScreenViewController: UIViewController {
         return zoomRect
     }
     
+    private func handleImagePanHide() {
+        UIView.animate(withDuration: 0.2) {
+            if self.imageView.center.y < self.scrollView.center.y {
+                self.imageView.frame.origin.y = -self.imageView.frame.height
+            } else {
+                self.imageView.frame.origin.y = self.imageView.frame.height
+            }
+        } completion: { _ in
+            self.viewModel.goBack(animated: false)
+        }
+    }
+    
     @IBAction func goBack(_ sender: Any) {
         viewModel.goBack(animated: true)
     }
@@ -125,31 +137,14 @@ class PhotoScreenViewController: UIViewController {
             sender.setTranslation(.zero, in: view)
         case .ended:
             if abs(imageView.center.y - scrollView.center.y) > 250 {
-                UIView.animate(withDuration: 0.2) {
-                    if self.imageView.center.y < self.scrollView.center.y {
-                        self.imageView.frame.origin.y = -self.imageView.frame.height
-                    } else {
-                        self.imageView.frame.origin.y = self.imageView.frame.height
-                    }
-                } completion: { _ in
-                    self.viewModel.goBack(animated: false)
-                }
+                handleImagePanHide()
             } else if sender.velocity(in: view).y >= 1400 || sender.velocity(in: view).y <= -1400 {
-                UIView.animate(withDuration: 0.2) {
-                    if self.imageView.center.y < self.scrollView.center.y {
-                        self.imageView.frame.origin.y = -self.imageView.frame.height
-                    } else {
-                        self.imageView.frame.origin.y = self.imageView.frame.height
-                    }
-                } completion: { _ in
-                    self.viewModel.goBack(animated: false)
-                }
+                handleImagePanHide()
             } else {
                 UIView.animate(withDuration: 0.3) {
                     self.imageView.center = self.scrollView.center
                 }
             }
-            
         default:
             break
         }
