@@ -32,6 +32,12 @@ class CustomSearchBar: UIView {
         setupView()
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        subviews.forEach {$0.removeFromSuperview()}
+        setupView()
+    }
+    
     func setupView() {
         guard let view = loadFromNib(nibName: "CustomSearchBar") else { return }
         view.frame = bounds
@@ -40,7 +46,7 @@ class CustomSearchBar: UIView {
         view.layer.cornerRadius = 7
         rightConstraint.isActive = false
         widthConstraint.isActive = true
-        leftConstraint.constant = bounds.midX - 65
+        leftConstraint.constant = bounds.midX - 95 / 2
         
         textField.delegate = self
         
