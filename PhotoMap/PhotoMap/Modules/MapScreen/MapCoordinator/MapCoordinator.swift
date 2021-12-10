@@ -17,8 +17,11 @@ class MapCoordinator: Coordinator {
     private weak var rootNavigationController: UINavigationController?
     private var childCoordinators = [Coordinator]()
     
-    init(rootNavigationController: UINavigationController) {
+    private var deepLinkPath: String?
+    
+    init(rootNavigationController: UINavigationController, deepLinkPath: String? = nil) {
         self.rootNavigationController = rootNavigationController
+        self.deepLinkPath = deepLinkPath
     }
     
     func start() {
@@ -42,6 +45,19 @@ class MapCoordinator: Coordinator {
         tabBarController.setViewControllers([mapView, timeLineView], animated: false)
         rootNavigationController.navigationBar.isHidden = true
         rootNavigationController.setViewControllers([tabBarController], animated: true)
+        
+        if let deepLinkPath = deepLinkPath {
+            FirebaseService.shared.getUserPhotos { result in
+                switch result {
+                case .success(let photos):
+                    guard let index = photos.firstIndex(where: {URL(string: $0.imageUrl)?.path == deepLinkPath}) else { return }
+                    let photoCardModel = PhotoCardModel(restModel: photos[index])
+                    self.showPhoto(with: photoCardModel)
+                case .failure:
+                    return
+                }
+            }
+        }
     }
     
     func add(childCoordinator: Coordinator) {

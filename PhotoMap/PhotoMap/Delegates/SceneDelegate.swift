@@ -18,6 +18,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UIGestureRecognizerDele
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
+        if connectionOptions.urlContexts.first?.url != nil {
+            guard
+                let host = connectionOptions.urlContexts.first?.url.host,
+                let path = connectionOptions.urlContexts.first?.url.path,
+                host == "firebasestorage.googleapis.com" else  { return }
+            
+            openPhotoScreen(deepLinkPath: path)
+            return
+        }
         let navigation = UINavigationController()
         window?.rootViewController = navigation
         window?.makeKeyAndVisible()
@@ -56,6 +65,28 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UIGestureRecognizerDele
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
+    }
+    
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        guard
+            let host = URLContexts.first?.url.host,
+            let path = URLContexts.first?.url.path,
+            host == "firebasestorage.googleapis.com" else  { return }
+        
+        openPhotoScreen(deepLinkPath: path)
+    }
+    
+    private func openPhotoScreen(deepLinkPath: String) {
+        let navigation = UINavigationController()
+        window?.rootViewController = navigation
+        window?.makeKeyAndVisible()
+        if let _ = SecureStorageService.shared.obtainToken() {
+            let coordinator = MapCoordinator(rootNavigationController: navigation, deepLinkPath: deepLinkPath)
+            coordinator.start()
+        } else {
+            let coordinator = AuthCoordinator(rootNavigationController: navigation, deepLinkPath: deepLinkPath)
+            coordinator.start()
+        }
     }
 
 

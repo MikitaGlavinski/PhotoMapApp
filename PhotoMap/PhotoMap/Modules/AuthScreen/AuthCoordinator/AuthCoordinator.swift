@@ -16,8 +16,11 @@ class AuthCoordinator: Coordinator {
     private weak var rootNavigationController: UINavigationController?
     private var childCoordinators = [Coordinator]()
     
-    init(rootNavigationController: UINavigationController) {
+    private var deepLinkPath: String?
+    
+    init(rootNavigationController: UINavigationController, deepLinkPath: String? = nil) {
         self.rootNavigationController = rootNavigationController
+        self.deepLinkPath = deepLinkPath
     }
     
     func start() {
@@ -57,5 +60,17 @@ extension AuthCoordinator: AuthCoordinatorDelegate {
         guard let rootNavigationController = rootNavigationController else { return }
         let mapCoordinator = MapCoordinator(rootNavigationController: rootNavigationController)
         mapCoordinator.start()
+        if let deepLinkPath = deepLinkPath {
+            FirebaseService.shared.getUserPhotos { result in
+                switch result {
+                case .success(let photos):
+                    guard let index = photos.firstIndex(where: {URL(string: $0.imageUrl)?.path == deepLinkPath}) else { return }
+                    let photoCardModel = PhotoCardModel(restModel: photos[index])
+                    mapCoordinator.showPhoto(with: photoCardModel)
+                case .failure:
+                    return
+                }
+            }
+        }
     }
 }
