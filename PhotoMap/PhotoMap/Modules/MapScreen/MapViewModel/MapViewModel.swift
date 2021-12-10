@@ -72,7 +72,7 @@ extension MapViewModel: MapViewModelProtocol {
     func uploadImageData(from model: PhotoCardModel) {
         queue.async {
             guard
-                let imageData = model.image?.jpegData(compressionQuality: 0.1),
+                let imageData = model.image?.jpegData(compressionQuality: 1),
                 let token = SecureStorageService.shared.obtainToken()
             else { return }
             FirebaseService.shared.uploadImage(data: imageData) { result in

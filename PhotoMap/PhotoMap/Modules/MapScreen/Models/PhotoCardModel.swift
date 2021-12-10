@@ -39,7 +39,7 @@ struct PhotoCardModel {
         self.date = date
         let convertDate = Date(timeIntervalSince1970: date)
         let formatter = DateFormatter()
-        formatter.dateFormat = "MMMM d'th,' yyyy '-' HH:mm 'pm'"
+        formatter.dateFormat = "MMMM d'th,' yyyy '-' HH:mm a"
         self.stringDate = formatter.string(from: convertDate)
         self.category = category
         self.text = text
