@@ -21,6 +21,8 @@ protocol MapViewInput: AnyObject {
 class MapViewController: UIViewController {
     
     var viewModel: MapViewModelProtocol!
+    private var locationManager: CLLocationManager!
+    
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var locationButton: UIButton!
     
@@ -56,7 +58,8 @@ class MapViewController: UIViewController {
     }
     
     private func setupUI() {
-        let locationManager = CLLocationManager()
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         
         mapView.delegate = self
@@ -276,5 +279,23 @@ extension MapViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didChange mode: MKUserTrackingMode, animated: Bool) {
         locationButton.tintColor = mapView.userTrackingMode == .none ? .darkGray : .systemBlue
+    }
+}
+
+extension MapViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .denied {
+            let alert = UIAlertController(title: "Location", message: "You need to enable location at settings", preferredStyle: .alert)
+            let action = UIAlertAction(title: "Settings", style: .default) { _ in
+                guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+                if UIApplication.shared.canOpenURL(url) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                }
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            alert.addAction(action)
+            alert.addAction(cancelAction)
+            present(alert, animated: true, completion: nil)
+        }
     }
 }
