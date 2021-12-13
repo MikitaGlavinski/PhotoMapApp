@@ -80,13 +80,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UIGestureRecognizerDele
         let navigation = UINavigationController()
         window?.rootViewController = navigation
         window?.makeKeyAndVisible()
-        if let _ = SecureStorageService.shared.obtainToken() {
-            let coordinator = MapCoordinator(rootNavigationController: navigation, deepLinkPath: deepLinkPath)
-            coordinator.start()
-        } else {
-            let coordinator = AuthCoordinator(rootNavigationController: navigation, deepLinkPath: deepLinkPath)
-            coordinator.start()
-        }
+        DeepLinkService.path = deepLinkPath
+        DeepLinkService.shared.openPhotoWith(navigationController: navigation)
     }
 
 
