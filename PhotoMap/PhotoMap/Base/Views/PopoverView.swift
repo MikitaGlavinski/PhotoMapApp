@@ -59,9 +59,7 @@ class PopoverView: UIView {
         textLabel.text = model.text
         
         let date = Date(timeIntervalSince1970: model.date)
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MM-dd-yyyy"
-        dateLabel.text = formatter.string(from: date)
+        dateLabel.text = CustomDateFormatter.shared.string(from: date, format: "MM-dd-yyyy")
         
         if let image = model.image {
             imageView.image = image

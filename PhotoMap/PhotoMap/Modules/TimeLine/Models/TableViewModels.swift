@@ -42,11 +42,8 @@ struct TimeLineCellModel {
         self.infoLabelText = photoRestModel.text
         self.date = photoRestModel.date
         let date = Date(timeIntervalSince1970: photoRestModel.date)
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MM-dd-yy"
-        self.secondaryLabelText = formatter.string(from: date) + " / \(photoRestModel.category)"
-        formatter.dateFormat = "MMMM yyyy"
-        self.sectionTitle = formatter.string(from: date)
+        self.secondaryLabelText = CustomDateFormatter.shared.string(from: date, format: "MM-dd-yy") + " / \(photoRestModel.category)"
+        self.sectionTitle = CustomDateFormatter.shared.string(from: date, format: "MMMM yyyy")
         self.category = photoRestModel.category
     }
 }

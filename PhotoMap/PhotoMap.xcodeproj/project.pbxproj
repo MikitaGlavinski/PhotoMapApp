@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		FA0972C927672B59000C6A13 /* DeepLinkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0972C827672B59000C6A13 /* DeepLinkService.swift */; };
+		FA0972CB276750D3000C6A13 /* CustomDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0972CA276750D3000C6A13 /* CustomDateFormatter.swift */; };
 		FA34EF53275A127500EC561C /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA34EF52275A127500EC561C /* UIViewExtension.swift */; };
 		FA34EF56275A13C200EC561C /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA34EF55275A13C200EC561C /* PopupView.swift */; };
 		FA34EF58275A144100EC561C /* PopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA34EF57275A144100EC561C /* PopupView.xib */; };
@@ -87,6 +88,7 @@
 
 /* Begin PBXFileReference section */
 		FA0972C827672B59000C6A13 /* DeepLinkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkService.swift; sourceTree = "<group>"; };
+		FA0972CA276750D3000C6A13 /* CustomDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDateFormatter.swift; sourceTree = "<group>"; };
 		FA34EF52275A127500EC561C /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		FA34EF55275A13C200EC561C /* PopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
 		FA34EF57275A144100EC561C /* PopupView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PopupView.xib; sourceTree = "<group>"; };
@@ -458,6 +460,7 @@
 				FAC2F301275E320B00E36931 /* DictionaryHelper.swift */,
 				FA990FDA275F61950074E0D9 /* NetworkService.swift */,
 				FA0972C827672B59000C6A13 /* DeepLinkService.swift */,
+				FA0972CA276750D3000C6A13 /* CustomDateFormatter.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -730,6 +733,7 @@
 				FA85B7082760F2E200B68AEC /* CustomSearchBar.swift in Sources */,
 				FA34EF56275A13C200EC561C /* PopupView.swift in Sources */,
 				FA5630D22761F096004202AE /* CategoryCell.swift in Sources */,
+				FA0972CB276750D3000C6A13 /* CustomDateFormatter.swift in Sources */,
 				FAA08C4E2758F52F00B7C960 /* AuthViewController.swift in Sources */,
 				FA5630CD2761EE68004202AE /* CategoryViewModel.swift in Sources */,
 				FAA08C4A2758EDD300B7C960 /* AuthCoordinator.swift in Sources */,

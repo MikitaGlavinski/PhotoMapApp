@@ -139,7 +139,6 @@ extension MapViewModel: MapViewModelProtocol {
         NetworkService.shared.loadImageFrom(url: url, completion: completion) { error in
             self.view.showError(error: error)
         }
-
     }
     
     func showPhoto(with model: PhotoCardModel) {

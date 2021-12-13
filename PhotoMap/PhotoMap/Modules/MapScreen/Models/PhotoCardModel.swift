@@ -38,9 +38,7 @@ struct PhotoCardModel {
         self.image = image
         self.date = date
         let convertDate = Date(timeIntervalSince1970: date)
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMMM d'th,' yyyy '-' HH:mm a"
-        self.stringDate = formatter.string(from: convertDate)
+        self.stringDate = CustomDateFormatter.shared.string(from: convertDate, format: "MMMM d'th,' yyyy '-' HH:mm a")
         self.category = category
         self.text = text
         self.lat = lat
@@ -87,5 +85,16 @@ struct PhotoRestModel: Codable {
         self.text = cardModel.text
         self.lat = cardModel.lat
         self.lon = cardModel.lon
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "id"
+        case imageUrl = "imageUrl"
+        case date = "date"
+        case stringDate = "stringDate"
+        case category = "category"
+        case text = "text"
+        case lat = "lat"
+        case lon = "lon"
     }
 }

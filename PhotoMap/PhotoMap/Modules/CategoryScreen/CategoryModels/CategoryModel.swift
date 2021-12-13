@@ -15,4 +15,9 @@ struct CategoryModel: Codable {
         self.title = title
         self.isSelected = isSelected
     }
+    
+    enum CodingKeys: String, CodingKey {
+        case title = "title"
+        case isSelected = "isSelected"
+    }
 }
