@@ -24,6 +24,7 @@ class PhotoScreenViewController: UIViewController {
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var userLabel: UILabel!
     
     private lazy var zoomTap: UITapGestureRecognizer = {
         let tap = UITapGestureRecognizer(target: self, action: #selector(zoomingTap))
@@ -155,6 +156,7 @@ extension PhotoScreenViewController: PhotoScreenViewInput {
     func setupUI(with model: PhotoCardModel) {
         textLabel.text = model.text
         dateLabel.text = model.stringDate
+        userLabel.text = model.email
         if let image = model.image {
             imageView.image = image
         } else {

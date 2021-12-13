@@ -16,6 +16,7 @@ class PopoverView: UIView {
     
     @IBOutlet weak var textLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var backimageView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -57,6 +58,7 @@ class PopoverView: UIView {
         backimageView.layer.masksToBounds = false
         
         textLabel.text = model.text
+        emailLabel.text = model.email
         
         let date = Date(timeIntervalSince1970: model.date)
         dateLabel.text = CustomDateFormatter.shared.string(from: date, format: "MM-dd-yyyy")

@@ -163,7 +163,8 @@ extension MapViewModel: UINavigationControllerDelegate, UIImagePickerControllerD
             category: .friends,
             text: "",
             lat: touchCoordinate.latitude,
-            lon: touchCoordinate.longitude
+            lon: touchCoordinate.longitude,
+            email: SecureStorageService.shared.obtainEmail() ?? ""
         )
         view.showPopupView(with: cardModel)
     }

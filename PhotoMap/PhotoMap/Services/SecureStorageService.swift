@@ -12,6 +12,8 @@ protocol SecureStorageServiceProtocol {
     func saveToken(token: String)
     func savePhotoModels(models: [PhotoRestModel])
     func obtainPhotoModels() -> [PhotoRestModel]
+    func saveEmail(_ email: String)
+    func obtainEmail() -> String?
 }
 
 class SecureStorageService: SecureStorageServiceProtocol {
@@ -42,5 +44,13 @@ class SecureStorageService: SecureStorageServiceProtocol {
             return []
         }
         return photos
+    }
+    
+    func saveEmail(_ email: String) {
+        storage.setValue(email, forKey: "email")
+    }
+    
+    func obtainEmail() -> String? {
+        storage.string(forKey: "email")
     }
 }

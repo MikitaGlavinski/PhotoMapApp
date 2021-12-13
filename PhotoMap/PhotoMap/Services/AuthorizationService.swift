@@ -28,6 +28,7 @@ class AuthorizationService: AuthorizationServiceProtocol {
                 completion(.failure(NetworkError.noData))
                 return
             }
+            SecureStorageService.shared.saveEmail(email)
             completion(.success(token))
         }
     }
@@ -42,6 +43,7 @@ class AuthorizationService: AuthorizationServiceProtocol {
                 completion(.failure(NetworkError.noData))
                 return
             }
+            SecureStorageService.shared.saveEmail(email)
             completion(.success(token))
         }
     }

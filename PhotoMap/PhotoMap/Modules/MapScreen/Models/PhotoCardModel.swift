@@ -24,6 +24,7 @@ struct PhotoCardModel {
     var text: String
     var lat: Double
     var lon: Double
+    var email: String
     
     init(
         image: UIImage,
@@ -32,7 +33,8 @@ struct PhotoCardModel {
         category: Category,
         text: String,
         lat: Double,
-        lon: Double
+        lon: Double,
+        email: String
     ) {
         self.id = UUID().uuidString
         self.image = image
@@ -43,6 +45,7 @@ struct PhotoCardModel {
         self.text = text
         self.lat = lat
         self.lon = lon
+        self.email = email
     }
     
     init(restModel: PhotoRestModel) {
@@ -53,6 +56,7 @@ struct PhotoCardModel {
         self.text = restModel.text
         self.lat = restModel.lat
         self.lon = restModel.lon
+        self.email = restModel.email
         switch restModel.category {
         case "FRIENDS":
             self.category = .friends
@@ -75,6 +79,7 @@ struct PhotoRestModel: Codable {
     var text: String
     var lat: Double
     var lon: Double
+    var email: String
     
     init(cardModel: PhotoCardModel, imageUrl: String) {
         self.id = cardModel.id
@@ -85,6 +90,7 @@ struct PhotoRestModel: Codable {
         self.text = cardModel.text
         self.lat = cardModel.lat
         self.lon = cardModel.lon
+        self.email = cardModel.email
     }
     
     enum CodingKeys: String, CodingKey {
@@ -96,5 +102,6 @@ struct PhotoRestModel: Codable {
         case text = "text"
         case lat = "lat"
         case lon = "lon"
+        case email = "email"
     }
 }

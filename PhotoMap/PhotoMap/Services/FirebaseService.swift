@@ -49,7 +49,7 @@ class FirebaseService: FirebaseServiceProtocol {
     
     func setDataAt(path: String, data: PhotoRestModel, completion: @escaping (Result<String, Error>) -> ()) {
         guard let dictionaryData = try? DictionaryEncoder().encode(data) else { return }
-        db.document(path).setData(dictionaryData) { error in
+        db.document("photos/\(data.id)").setData(dictionaryData) { error in
             self.queue.async {
                 if let error = error {
                     completion(.failure(error))
@@ -69,8 +69,7 @@ class FirebaseService: FirebaseServiceProtocol {
     }
     
     func getUserPhotos(completion: @escaping (Result<[PhotoRestModel], Error>) -> ()) {
-        guard let token = SecureStorageService.shared.obtainToken() else { return }
-        getListData(path: token, type: PhotoRestModel.self, completion: completion) { photos in
+        getListData(path: "photos", type: PhotoRestModel.self, completion: completion) { photos in
             SecureStorageService.shared.savePhotoModels(models: photos)
             guard let updateSignal = self.updateSignal else { return }
             updateSignal()
