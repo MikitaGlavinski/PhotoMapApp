@@ -43,13 +43,14 @@ class DeepLinkService: DeepLinkServiceProtocol {
     }
     
     func openPhotoFromAuth(navigationController: UINavigationController) {
+        let mapCoordinator = MapCoordinator(rootNavigationController: navigationController)
+        mapCoordinator.start()
+        
         FirebaseService.shared.getUserPhotos { result in
             switch result {
             case .success(let photos):
                 guard let index = photos.firstIndex(where: {URL(string: $0.imageUrl)?.path == DeepLinkService.path}) else { return }
                 let photoCardModel = PhotoCardModel(restModel: photos[index])
-                let mapCoordinator = MapCoordinator(rootNavigationController: navigationController)
-                mapCoordinator.start()
                 mapCoordinator.showPhoto(with: photoCardModel)
                 DeepLinkService.path = nil
             case .failure:
