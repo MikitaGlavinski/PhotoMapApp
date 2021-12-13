@@ -9,14 +9,15 @@ import Foundation
 import Firebase
 
 protocol FirebaseServiceProtocol {
-    func setDataAt(path: String, data: [String: Any], completion: @escaping (Result<String, Error>) -> ())
+    func setDataAt(path: String, data: PhotoRestModel, completion: @escaping (Result<String, Error>) -> ())
     func getUserPhotos(completion: @escaping (Result<[PhotoRestModel], Error>) -> ())
     func uploadImage(data: Data, completion: @escaping (Result<String, Error>) -> ())
+    var updateSignal: (() -> ())? { get set }
 }
 
 class FirebaseService: FirebaseServiceProtocol {
     
-    static let shared: FirebaseServiceProtocol = FirebaseService()
+    static var shared: FirebaseServiceProtocol = FirebaseService()
     
     private init() {}
     
@@ -25,7 +26,9 @@ class FirebaseService: FirebaseServiceProtocol {
     private let db = Firestore.firestore()
     private let storage = Storage.storage().reference()
     
-    private func getListData<T: Decodable>(path: String, type: T.Type, completion: @escaping (Result<[T], Error>) -> ()) {
+    var updateSignal: (() -> ())?
+    
+    private func getListData<T: Decodable>(path: String, type: T.Type, completion: @escaping (Result<[T], Error>) -> (), saveCompletion: @escaping ([T]) -> ()) {
         db.collection(path).getDocuments { snapshot, error in
             if let error = error {
                 completion(.failure(error))
@@ -39,25 +42,39 @@ class FirebaseService: FirebaseServiceProtocol {
                 }
                 items.append(item)
             }
+            saveCompletion(items)
             completion(.success(items))
         }
     }
     
-    func setDataAt(path: String, data: [String: Any], completion: @escaping (Result<String, Error>) -> ()) {
-        db.document(path).setData(data) { error in
+    func setDataAt(path: String, data: PhotoRestModel, completion: @escaping (Result<String, Error>) -> ()) {
+        guard let dictionaryData = try? DictionaryEncoder().encode(data) else { return }
+        db.document(path).setData(dictionaryData) { error in
             self.queue.async {
                 if let error = error {
                     completion(.failure(error))
                     return
                 }
                 completion(.success("success"))
+                
+                var photos = SecureStorageService.shared.obtainPhotoModels()
+                guard let index = photos.firstIndex(where: {$0.id == data.id}) else { return }
+                photos[index] = data
+                SecureStorageService.shared.savePhotoModels(models: photos)
+                
+                guard let updateSignal = self.updateSignal else { return }
+                updateSignal()
             }
         }
     }
     
     func getUserPhotos(completion: @escaping (Result<[PhotoRestModel], Error>) -> ()) {
         guard let token = SecureStorageService.shared.obtainToken() else { return }
-        getListData(path: token, type: PhotoRestModel.self, completion: completion)
+        getListData(path: token, type: PhotoRestModel.self, completion: completion) { photos in
+            SecureStorageService.shared.savePhotoModels(models: photos)
+            guard let updateSignal = self.updateSignal else { return }
+            updateSignal()
+        }
     }
     
     func uploadImage(data: Data, completion: @escaping (Result<String, Error>) -> ()) {

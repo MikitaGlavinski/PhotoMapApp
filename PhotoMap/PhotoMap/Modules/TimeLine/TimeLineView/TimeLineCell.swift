@@ -20,13 +20,26 @@ class TimeLineCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
+    private var cellModel: TimeLineCellModel!
+    
     func configureCell(with model: TimeLineCellModel) {
+        self.cellModel = model
         infoLabel.text = model.infoLabelText
         dateLabel.text = model.secondaryLabelText
+        photoImageView.image = nil
         activityIndicator.startAnimating()
-        delegate.loadImage(url: model.imageUrl) { image in
-            self.photoImageView.image = image
-            self.activityIndicator.stopAnimating()
+        if model.imageUrl != "" {
+            delegate.loadImage(url: model.imageUrl) { image in
+                self.photoImageView.image = image
+                self.activityIndicator.stopAnimating()
+            }
         }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        infoLabel.text = ""
+        dateLabel.text = ""
+        photoImageView.image = nil
     }
 }

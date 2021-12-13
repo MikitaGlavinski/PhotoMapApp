@@ -39,6 +39,7 @@ class NetworkService: NetworkServiceProtocol {
         let destination: DownloadRequest.Destination = { _, _ in
             return (baseUrl, [.removePreviousFile])
         }
+        
         AF.download(URL(string: url)!, to: destination).responseData { response in
             guard
                 let destinationUrl = response.fileURL,

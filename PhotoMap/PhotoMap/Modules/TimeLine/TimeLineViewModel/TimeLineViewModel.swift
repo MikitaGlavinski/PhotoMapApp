@@ -25,6 +25,12 @@ class TimeLineViewModel {
     private var filteredSections = [TimeLineSection]()
     private var selectedCategories: [Category] = [.friends, .nature, .standart]
     
+    init() {
+        FirebaseService.shared.updateSignal = { [weak self] in
+            self?.viewDidLoad()
+        }
+    }
+    
     private func filterSelectedCategories() {
         filteredSections = sections.compactMap({ section in
             var filteredRows = [TimeLineCellModel]()
@@ -55,31 +61,31 @@ class TimeLineViewModel {
             })
         }
     }
+    
+    deinit {
+        FirebaseService.shared.updateSignal = nil
+    }
 }
 
 extension TimeLineViewModel: TimeLineViewModelProtocol {
     
     func viewDidLoad() {
-        FirebaseService.shared.getUserPhotos { result in
-            switch result {
-            case .success(let restModels):
-                self.photoRestModels = restModels
-                let cellModels = restModels.compactMap({TimeLineCellModel(photoRestModel: $0)})
-                    .sorted(by: {$0.date > $1.date})
-                var sections = [TimeLineSection]()
-                for cell in cellModels {
-                    guard let index = sections.firstIndex(where: {$0.title == cell.sectionTitle}) else {
-                        sections.append(TimeLineSection(title: cell.sectionTitle, rows: [cell]))
-                        continue
-                    }
-                    sections[index].rows.append(cell)
-                }
-                self.sections = sections
-                self.filterSelectedCategories()
-                self.view.setupSectionList(sections: self.filteredSections)
-            case .failure(let error):
-                self.view.showError(error: error)
+        let restModels = SecureStorageService.shared.obtainPhotoModels()
+        self.photoRestModels = restModels
+        let cellModels = restModels.compactMap({TimeLineCellModel(photoRestModel: $0)})
+            .sorted(by: {$0.date > $1.date})
+        var sections = [TimeLineSection]()
+        for cell in cellModels {
+            guard let index = sections.firstIndex(where: {$0.title == cell.sectionTitle}) else {
+                sections.append(TimeLineSection(title: cell.sectionTitle, rows: [cell]))
+                continue
             }
+            sections[index].rows.append(cell)
+        }
+        self.sections = sections
+        self.filterSelectedCategories()
+        DispatchQueue.main.async {
+            self.view.setupSectionList(sections: self.filteredSections)
         }
     }
     

@@ -70,6 +70,10 @@ extension MapViewModel: MapViewModelProtocol {
     }
     
     func uploadImageData(from model: PhotoCardModel) {
+        var photos = SecureStorageService.shared.obtainPhotoModels()
+        photos.append(PhotoRestModel(cardModel: model, imageUrl: ""))
+        SecureStorageService.shared.savePhotoModels(models: photos)
+        
         queue.async {
             guard
                 let imageData = model.image?.jpegData(compressionQuality: 1),
@@ -79,23 +83,16 @@ extension MapViewModel: MapViewModelProtocol {
                 switch result {
                 case .success(let url):
                     let restModel = PhotoRestModel(cardModel: model, imageUrl: url)
-                    do {
-                        let data = try DictionaryEncoder().encode(restModel)
-                        FirebaseService.shared.setDataAt(path: "\(token)/\(restModel.id)", data: data) { result in
-                            switch result {
-                            case .success:
-                                DispatchQueue.main.async {
-                                    self.view.addPin(model: model)
-                                }
-                            case .failure(let error):
-                                DispatchQueue.main.async {
-                                    self.view.showError(error: error)
-                                }
+                    FirebaseService.shared.setDataAt(path: "\(token)/\(restModel.id)", data: restModel) { result in
+                        switch result {
+                        case .success:
+                            DispatchQueue.main.async {
+                                self.view.addPin(model: model)
                             }
-                        }
-                    } catch let error {
-                        DispatchQueue.main.async {
-                            self.view.showError(error: error)
+                        case .failure(let error):
+                            DispatchQueue.main.async {
+                                self.view.showError(error: error)
+                            }
                         }
                     }
                 case .failure(let error):
@@ -114,23 +111,16 @@ extension MapViewModel: MapViewModelProtocol {
         else { return }
         
         let restModel = PhotoRestModel(cardModel: model, imageUrl: imageUrl)
-        do {
-            let data = try DictionaryEncoder().encode(restModel)
-            FirebaseService.shared.setDataAt(path: "\(token)/\(restModel.id)", data: data) { result in
-                switch result {
-                case .success:
-                    DispatchQueue.main.async {
-                        self.view.addPin(model: model)
-                    }
-                case .failure(let error):
-                    DispatchQueue.main.async {
-                        self.view.showError(error: error)
-                    }
+        FirebaseService.shared.setDataAt(path: "\(token)/\(restModel.id)", data: restModel) { result in
+            switch result {
+            case .success:
+                DispatchQueue.main.async {
+                    self.view.addPin(model: model)
                 }
-            }
-        } catch let error {
-            DispatchQueue.main.async {
-                self.view.showError(error: error)
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    self.view.showError(error: error)
+                }
             }
         }
     }

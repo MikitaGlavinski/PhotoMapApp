@@ -20,9 +20,12 @@ class TimeLineViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: CustomSearchBar!
     
+    override func viewWillAppear(_ animated: Bool) {
+        viewModel.viewDidLoad()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.viewDidLoad()
         setupUI()
         addGestures()
     }
@@ -58,6 +61,7 @@ extension TimeLineViewController: TimeLineViewInput {
     }
     
     func setupSectionList(sections: [TimeLineSection]) {
+        guard let tableView = self.tableView else { return }
         filteredSections = sections
         tableView.reloadData()
     }

@@ -23,6 +23,7 @@ class PhotoScreenViewController: UIViewController {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var topView: UIView!
+    @IBOutlet weak var containerView: UIView!
     
     private lazy var zoomTap: UITapGestureRecognizer = {
         let tap = UITapGestureRecognizer(target: self, action: #selector(zoomingTap))
@@ -115,16 +116,14 @@ class PhotoScreenViewController: UIViewController {
                 self.topView.alpha = 0.0
                 self.backButton.alpha = 0.0
                 self.bottomView.alpha = 0.0
-                self.textLabel.alpha = 0.0
-                self.dateLabel.alpha = 0.0
+                self.containerView.alpha = 0.0
             }
         } else {
             UIView.animate(withDuration: 0.2) {
                 self.topView.alpha = 0.5
                 self.backButton.alpha = 1.0
                 self.bottomView.alpha = 0.5
-                self.textLabel.alpha = 1.0
-                self.dateLabel.alpha = 1.0
+                self.containerView.alpha = 1.0
             }
         }
     }
